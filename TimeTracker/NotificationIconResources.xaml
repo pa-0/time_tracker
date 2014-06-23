@@ -3,18 +3,15 @@
                     xmlns:tb="http://www.hardcodet.net/taskbar"
                     xmlns:local="clr-namespace:Ficksworkshop.TimeTracker">
     <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
-        <MenuItem Header="Exit" Command="{Binding ExitApplicationCommand}" />
+        <MenuItem Header="Open Window" Command="{x:Static local:Commands.ShowWindowCommand}"/>
+        <Separator/>
+        <MenuItem Header="Exit" Command="{x:Static local:Commands.ExitApplicationCommand}" />
     </ContextMenu>
     
     <tb:TaskbarIcon x:Key="NotificationIcon"
                     IconSource="/Red.ico"
                     ToolTipText="Double-click to punch-in/punch-out"
-                    DoubleClickCommand="{Binding TogglePunchStateCommand}"
+                    DoubleClickCommand="{x:Static local:Commands.TogglePunchStateCommand}"
                     ContextMenu="{StaticResource SysTrayMenu}">
-
-        <tb:TaskbarIcon.DataContext>
-            <local:NotificationIconViewModel />
-        </tb:TaskbarIcon.DataContext>
-
     </tb:TaskbarIcon>
 </ResourceDictionary>

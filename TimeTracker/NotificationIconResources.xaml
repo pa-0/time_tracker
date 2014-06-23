@@ -4,6 +4,20 @@
                     xmlns:local="clr-namespace:Ficksworkshop.TimeTracker">
     <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
         <MenuItem Header="Open Window" Command="{x:Static local:Commands.ShowWindowCommand}"/>
+        <MenuItem Command="{Binding TogglePunchStateCommand}">
+               <MenuItem.Style>
+                   <Style TargetType="MenuItem">
+                       <Style.Triggers>
+                           <DataTrigger Binding="{Binding IsPunchedIn}" Value="false">
+                               <Setter Property="Header" Value="Punch in"/>
+                           </DataTrigger>
+                           <DataTrigger Binding="{Binding IsPunchedIn}" Value="true">
+                               <Setter Property="Header" Value="Punch out"/>
+                           </DataTrigger>
+                       </Style.Triggers>
+                   </Style>
+               </MenuItem.Style>
+        </MenuItem>
         <Separator/>
         <MenuItem Header="Exit" Command="{x:Static local:Commands.ExitApplicationCommand}" />
     </ContextMenu>
@@ -11,7 +25,11 @@
     <tb:TaskbarIcon x:Key="NotificationIcon"
                     IconSource="/Red.ico"
                     ToolTipText="Double-click to punch-in/punch-out"
-                    DoubleClickCommand="{x:Static local:Commands.TogglePunchStateCommand}"
+                    DoubleClickCommand="{Binding TogglePunchStateCommand}"
                     ContextMenu="{StaticResource SysTrayMenu}">
+        
+        <tb:TaskbarIcon.DataContext>
+            <local:NotificationIconViewModel/>
+        </tb:TaskbarIcon.DataContext>
     </tb:TaskbarIcon>
 </ResourceDictionary>

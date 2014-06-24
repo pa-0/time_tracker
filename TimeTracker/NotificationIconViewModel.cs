@@ -2,15 +2,10 @@
 using System.ComponentModel;
 using System.Windows.Input;
 
+using Ficksworkshop.TimeTrackerAPI;
+
 namespace Ficksworkshop.TimeTracker
 {
-    public interface IProjectItem
-    {
-        string Name { get; }
-
-        bool Active { get; }
-    }
-
     public class NotificationIconViewModel : INotifyPropertyChanged
     {
         private bool _isPunchedIn = false;
@@ -31,17 +26,17 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        private IList<IProjectItem> _activeProjects;
+        private IList<IProject> _activeProjects;
 
-        public IList<IProjectItem> ActiveProjects
+        public IList<IProject> ActiveProjects
         {
             get
             {
                 if (_activeProjects == null)
                 {
-                    _activeProjects = new List<IProjectItem>();
-                    _activeProjects.Add(new ProjectItem{ Name ="1"});
-                    _activeProjects.Add(new ProjectItem { Name = "2" });
+                    _activeProjects = new List<IProject>();
+                    _activeProjects.Add(new Project{ Description ="1"});
+                    _activeProjects.Add(new Project { Description = "2" });
                 }
                 return _activeProjects;
             }
@@ -64,12 +59,5 @@ namespace Ficksworkshop.TimeTracker
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-    }
-
-    public class ProjectItem : IProjectItem
-    {
-        public string Name { get; set; }
-
-        public bool Active { get; set; }
     }
 }

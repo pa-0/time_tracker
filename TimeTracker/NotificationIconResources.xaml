@@ -3,6 +3,14 @@
                     xmlns:tb="http://www.hardcodet.net/taskbar"
                     xmlns:local="clr-namespace:Ficksworkshop.TimeTracker">
     <ContextMenu x:Shared="false" x:Key="SysTrayMenu">
+        <MenuItem Header="Projects" ItemsSource="{Binding ActiveProjects}">
+            <MenuItem.ItemContainerStyle>
+                <Style>
+                    <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
+                    <Setter Property="MenuItem.Command" Value="{Binding ActivateProjectCommand}"/>
+                </Style>
+            </MenuItem.ItemContainerStyle>
+        </MenuItem>
         <MenuItem Header="Open Window" Command="{x:Static local:Commands.ShowWindowCommand}"/>
         <MenuItem Command="{Binding TogglePunchStateCommand}">
                <MenuItem.Style>

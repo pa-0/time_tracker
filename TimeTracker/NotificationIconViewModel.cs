@@ -1,8 +1,16 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Input;
 
 namespace Ficksworkshop.TimeTracker
 {
+    public interface IProjectItem
+    {
+        string Name { get; }
+
+        bool Active { get; }
+    }
+
     public class NotificationIconViewModel : INotifyPropertyChanged
     {
         private bool _isPunchedIn = false;
@@ -23,6 +31,22 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
+        private IList<IProjectItem> _activeProjects;
+
+        public IList<IProjectItem> ActiveProjects
+        {
+            get
+            {
+                if (_activeProjects == null)
+                {
+                    _activeProjects = new List<IProjectItem>();
+                    _activeProjects.Add(new ProjectItem{ Name ="1"});
+                    _activeProjects.Add(new ProjectItem { Name = "2" });
+                }
+                return _activeProjects;
+            }
+        }
+
         public ICommand TogglePunchStateCommand
         {
             get
@@ -40,5 +64,12 @@ namespace Ficksworkshop.TimeTracker
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+    }
+
+    public class ProjectItem : IProjectItem
+    {
+        public string Name { get; set; }
+
+        public bool Active { get; set; }
     }
 }

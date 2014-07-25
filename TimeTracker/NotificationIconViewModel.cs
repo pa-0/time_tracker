@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -26,19 +26,21 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        private IList<IProject> _activeProjects;
+        private ObservableCollection<IProject> _activeProjects;
 
-        public IList<IProject> ActiveProjects
+        public ObservableCollection<IProject> ActiveProjects
         {
             get
             {
-                if (_activeProjects == null)
-                {
-                    _activeProjects = new List<IProject>();
-                    _activeProjects.Add(new Project{ Description ="1"});
-                    _activeProjects.Add(new Project { Description = "2" });
-                }
                 return _activeProjects;
+            }
+            set
+            {
+                if (_activeProjects != value)
+                {
+                    _activeProjects = value;
+                    this.NotifyPropertyChanged("ActiveProjectsCollection");
+                }
             }
         }
 

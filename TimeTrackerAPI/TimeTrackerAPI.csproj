@@ -45,9 +45,18 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
-    <Compile Include="IProject.cs" />
-    <Compile Include="Project.cs" />
+    <Compile Include="IProjectTimesData.cs" />
+    <Compile Include="XmlDataSetProjectTimesData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TimesDataSet.cs">
+      <DependentUpon>TimesDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TimesDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TimesDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="TrackerSettings.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -55,6 +64,17 @@
     <None Include="AppSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>AppSettings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="TimesDataSet.xsc">
+      <DependentUpon>TimesDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="TimesDataSet.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>TimesDataSet.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="TimesDataSet.xss">
+      <DependentUpon>TimesDataSet.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

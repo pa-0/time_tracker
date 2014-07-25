@@ -30,6 +30,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +46,8 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Commands\CreateProjectCommand.cs" />
+    <Compile Include="Commands\DeleteProjectCommand.cs" />
     <Compile Include="IProjectTimesData.cs" />
     <Compile Include="XmlDataSetProjectTimesData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

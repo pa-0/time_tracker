@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTrackerAPI.Commands;
 
 namespace Ficksworkshop.TimeTracker
 {
@@ -33,10 +34,7 @@ namespace Ficksworkshop.TimeTracker
                     }
             };
 
-        public static readonly ICommand CreateNewProjectCommand = new DelegateCommand
-            {
-                CommandAction = () => { TrackerInstance.DataSet.CreateProject(); }
-            };
+        public static readonly ICommand CreateNewProjectCommand = new CreateProjectCommand(() => TrackerInstance.DataSet);
     }
 
     /// <summary>

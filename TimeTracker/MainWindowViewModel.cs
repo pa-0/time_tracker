@@ -1,9 +1,13 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Windows.Input;
+
 using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTrackerAPI.Commands;
 
 namespace Ficksworkshop.TimeTracker
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : INotifyPropertyChanged
     {
         #region Fields
 
@@ -18,10 +22,30 @@ namespace Ficksworkshop.TimeTracker
         /// </summary>
         public ObservableCollection<IProject> Projects { get; private set; }
 
+        private IProject _selectedProject;
+
+        public IProject SelectedProject
+        {
+            get
+            {
+                return _selectedProject;
+            }
+            set
+            {
+                if (_selectedProject != value)
+                {
+                    _selectedProject = value;
+                    NotifyPropertyChanged("SelectedProject");
+                }
+            }
+        }
+
         /// <summary>
         /// The complete list of all user-controlled setings
         /// </summary>
         public ObservableCollection<ITrackerSetting> Settings { get; private set; }
+
+        public ICommand DeleteProjectCommand { get; private set; }
 
         #endregion
 
@@ -45,6 +69,9 @@ namespace Ficksworkshop.TimeTracker
 
             // Settings
             Settings = settings.Items;
+
+            // Commands
+            DeleteProjectCommand = new DeleteProjectCommand(() => dataSet, () => _selectedProject);
         }
 
         #endregion
@@ -57,6 +84,20 @@ namespace Ficksworkshop.TimeTracker
             foreach (IProject project in _dataSet.Projects)
             {
                 Projects.Add(project);
+            }
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void NotifyPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 

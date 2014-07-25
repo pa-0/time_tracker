@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -59,11 +60,26 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <inheritdoc />
         public IProject CreateProject()
         {
-            IProject project =  new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", false));
+            IProject project = new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", false));
 
             ProjectsChanged.Invoke(this, project);
 
             return project;
+        }
+
+        public void DeleteProject(IProject project)
+        {
+            var xmlProject = project as XmlDataSetProjectProxy;
+            if (xmlProject != null)
+            {
+                DataSet.Projects.RemoveProjectsRow(xmlProject.ProjectsRow);
+
+                ProjectsChanged.Invoke(this, project);
+            }
+            else
+            {
+                throw new ArgumentException("Project is not a project from this data set.");
+            }
         }
 
         /// <inheritdoc />
@@ -111,9 +127,9 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// </summary>
     internal class XmlDataSetProjectProxy : IProject
     {
-        #region Fields
+        #region Properties
 
-        private readonly TimesDataSet.ProjectsRow _projectRow;
+        internal TimesDataSet.ProjectsRow ProjectsRow { get; private set; }
 
         #endregion
 
@@ -125,7 +141,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <param name="project"></param>
         public XmlDataSetProjectProxy(TimesDataSet.ProjectsRow project)
         {
-            _projectRow = project;
+            ProjectsRow = project;
         }
 
         #endregion
@@ -137,12 +153,12 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             get
             {
-                return _projectRow.Name;
+                return ProjectsRow.Name;
             }
             set
             {
                 // TODO notify
-                _projectRow.Name = value;
+                ProjectsRow.Name = value;
             }
         }
 
@@ -151,12 +167,12 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             get
             {
-                return _projectRow.Identifier;
+                return ProjectsRow.Identifier;
             }
             set
             {
                 // TODO notify
-                _projectRow.Identifier = value;
+                ProjectsRow.Identifier = value;
             }
         }
 
@@ -165,11 +181,11 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             get
             {
-                return (_projectRow.IsActive) ? ProjectStatus.Open : ProjectStatus.Closed;
+                return (ProjectsRow.IsActive) ? ProjectStatus.Open : ProjectStatus.Closed;
             }
             set
             {
-                _projectRow.IsActive = (value == ProjectStatus.Open);
+                ProjectsRow.IsActive = (value == ProjectStatus.Open);
             }
         }
 

@@ -27,6 +27,12 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <returns>The new project instance.</returns>
         IProject CreateProject();
 
+        /// <summary>
+        /// Deletes a project instance.
+        /// </summary>
+        /// <param name="project">The project to delete.</param>
+        void DeleteProject(IProject project);
+
         event ProjectsChangedEventHandler ProjectsChanged;
     }
 

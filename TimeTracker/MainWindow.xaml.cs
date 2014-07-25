@@ -1,8 +1,5 @@
 ﻿using System.Windows;
 
-using Ficksworkshop.TimeTracker.Properties;
-using Ficksworkshop.TimeTrackerAPI;
-
 namespace Ficksworkshop.TimeTracker
 {
     /// <summary>
@@ -13,9 +10,6 @@ namespace Ficksworkshop.TimeTracker
         public MainWindow()
         {
             InitializeComponent();
-
-            SettingsGrid.DataContext = TrackerSettings.Default;
-            SettingsGrid.ItemsSource = TrackerSettings.Default.Items;
         }
     }
 }

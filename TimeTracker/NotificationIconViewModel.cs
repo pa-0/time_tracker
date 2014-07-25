@@ -39,7 +39,7 @@ namespace Ficksworkshop.TimeTracker
                 if (_activeProjects != value)
                 {
                     _activeProjects = value;
-                    this.NotifyPropertyChanged("ActiveProjectsCollection");
+                    NotifyPropertyChanged("ActiveProjectsCollection");
                 }
             }
         }
@@ -56,9 +56,9 @@ namespace Ficksworkshop.TimeTracker
 
         protected void NotifyPropertyChanged(string propertyName)
         {
-            if (this.PropertyChanged != null)
+            if (PropertyChanged != null)
             {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }

@@ -1,30 +1,46 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Input;
+using Ficksworkshop.TimeTrackerAPI;
 
 namespace Ficksworkshop.TimeTracker
 {
+    /// <summary>
+    /// Application commands (that generally are not context specific). They are always valid.
+    /// </summary>
     public static class Commands
     {
-
+        /// <summary>
+        /// Command to shutdown the application.
+        /// </summary>
         public static readonly ICommand ExitApplicationCommand = new DelegateCommand
             {
                 CommandAction = () => Application.Current.Shutdown()
             };
 
+        /// <summary>
+        /// Command to show the application UI (if it was not visible).
+        /// </summary>
         public static readonly ICommand ShowWindowCommand = new DelegateCommand
             {
                 CanExecuteFunc = () => Application.Current.MainWindow == null,
                 CommandAction = () =>
                     {
                         Application.Current.MainWindow = new MainWindow();
+                        var viewModel = new MainWindowViewModel(TrackerInstance.Settings, TrackerInstance.DataSet);
+                        Application.Current.MainWindow.DataContext = viewModel;
                         Application.Current.MainWindow.Show();
                     }
+            };
+
+        public static readonly ICommand CreateNewProjectCommand = new DelegateCommand
+            {
+                CommandAction = () => { TrackerInstance.DataSet.CreateProject(); }
             };
     }
 
     /// <summary>
-    /// Simplistic delegate command for the demo.
+    /// Simplistic delegate command.
     /// </summary>
     public class DelegateCommand : ICommand
     {

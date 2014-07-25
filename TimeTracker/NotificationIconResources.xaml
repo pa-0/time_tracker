@@ -35,7 +35,6 @@
                     ToolTipText="Double-click to punch-in/punch-out"
                     DoubleClickCommand="{Binding TogglePunchStateCommand}"
                     ContextMenu="{StaticResource SysTrayMenu}">
-        
         <tb:TaskbarIcon.DataContext>
             <local:NotificationIconViewModel/>
         </tb:TaskbarIcon.DataContext>

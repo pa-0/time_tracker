@@ -92,33 +92,18 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// </summary>
     public class TrackerSettings
     {
-        #region
-
-        #endregion
-
         #region Properties
 
         public ObservableCollection<ITrackerSetting> Items { get; private set; }
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
-        private static TrackerSettings instance;
-
-        public static TrackerSettings Default
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new TrackerSettings();
-                }
-                return instance;
-            }
-        }
-
-    private TrackerSettings()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackerSettings"/> class.
+        /// </summary>
+        public TrackerSettings()
         {
             Items = new ObservableCollection<ITrackerSetting>();
 

@@ -59,8 +59,15 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <inheritdoc />
         public IProject CreateProject()
         {
-            return new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", false));
+            IProject project =  new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", false));
+
+            ProjectsChanged.Invoke(this, project);
+
+            return project;
         }
+
+        /// <inheritdoc />
+        public event ProjectsChangedEventHandler ProjectsChanged;
 
         #endregion
 
@@ -96,6 +103,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             DataSet.WriteXml(stream);
         }
+
     }
 
     /// <summary>

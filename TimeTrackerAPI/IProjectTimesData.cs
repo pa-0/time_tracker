@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace Ficksworkshop.TimeTrackerAPI
 {
+    public delegate void ProjectsChangedEventHandler(object sender, object e);
+
     /// <summary>
     /// Represents the view of project times data that is exposed externally. The purpose of these
     /// interfaces is to allow chaning out the core data storage without affecting clients of the API.
@@ -24,6 +26,8 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// </summary>
         /// <returns>The new project instance.</returns>
         IProject CreateProject();
+
+        event ProjectsChangedEventHandler ProjectsChanged;
     }
 
     public enum ProjectStatus

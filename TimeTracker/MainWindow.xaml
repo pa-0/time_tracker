@@ -8,14 +8,17 @@
         <TabControl HorizontalAlignment="Left" Height="299" Margin="7,10,0,0" VerticalAlignment="Top" Width="500">
             <TabItem Header="Projects">
                 <StackPanel>
-                    <DataGrid ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" AutoGenerateColumns="False" IsReadOnly="True" Margin="14,10,4,0" VerticalAlignment="Top" Height="219" Width="476">
+                    <DataGrid ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" AutoGenerateColumns="False" IsReadOnly="True" VerticalAlignment="Top" Height="219" Width="476">
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=UniqueId, Mode=OneWay}" Header="Id"/>
                             <DataGridTextColumn Binding="{Binding Path=Name, Mode=OneWay}" Header="Name"/>
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Button Content="New Project" Height="22" Width="75" Command="{x:Static local:Commands.CreateNewProjectCommand}"/>
-                    <Button Content="Delete Project" Height="22" Width="75" Command="{Binding DeleteProjectCommand}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Button Content="New Project" Height="22" Width="75" Command="{x:Static local:Commands.CreateNewProjectCommand}"/>
+                        <Button Content="Delete Project" Height="22" Width="75" Command="{Binding DeleteProjectCommand}"/>
+                        <Button Content="Punch In/Out" Height="22" Width="75" Command="{Binding PunchInOutCommand}"/>
+                    </StackPanel>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Settings">

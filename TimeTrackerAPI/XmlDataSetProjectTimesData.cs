@@ -48,19 +48,10 @@ namespace Ficksworkshop.TimeTrackerAPI
             }
         }
 
-        /// <inheritdoc/>
-        public IEnumerable<IProjectTime> Times
-        {
-            get
-            {
-                return DataSet.Times.Select(dt => new XmlDataSetProjectTimeProxy(DataSet, dt));
-            }
-        }
-
         /// <inheritdoc />
         public IProject CreateProject()
         {
-            IProject project = new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", false));
+            IProject project = new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", true));
 
             ProjectsChanged.Invoke(this, project);
 
@@ -84,6 +75,30 @@ namespace Ficksworkshop.TimeTrackerAPI
 
         /// <inheritdoc />
         public event ProjectsChangedEventHandler ProjectsChanged;
+
+
+        /// <inheritdoc/>
+        public IEnumerable<IProjectTime> Times
+        {
+            get
+            {
+                return DataSet.Times.Select(dt => new XmlDataSetProjectTimeProxy(DataSet, dt));
+            }
+        }
+
+        /// <inheritdoc />
+        public IProjectTime CreateTime(IProject project, DateTime startTime, DateTime? endTime)
+        {
+            var xmlProject = project as XmlDataSetProjectProxy;
+            if (xmlProject != null)
+            {
+                return new XmlDataSetProjectTimeProxy(DataSet, DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? DateTime.MinValue));
+            }
+            else
+            {
+                throw new ArgumentException("Project is not a project from this data set.");
+            }
+        }
 
         #endregion
 

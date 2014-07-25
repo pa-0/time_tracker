@@ -11,15 +11,13 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// </summary>
     public interface IProjectTimesData
     {
+        #region Projects
+
         /// <summary>
         /// Gets a listing of all projects.
         /// </summary>
         IEnumerable<IProject> Projects { get; }
 
-        /// <summary>
-        /// Gets a listing of all times.
-        /// </summary>
-        IEnumerable<IProjectTime> Times { get; }
 
         /// <summary>
         /// Creates a new project instance.
@@ -34,6 +32,26 @@ namespace Ficksworkshop.TimeTrackerAPI
         void DeleteProject(IProject project);
 
         event ProjectsChangedEventHandler ProjectsChanged;
+
+        #endregion
+
+        #region Times
+
+        /// <summary>
+        /// Gets a listing of all times.
+        /// </summary>
+        IEnumerable<IProjectTime> Times { get; }
+
+        /// <summary>
+        /// Create a new time, associated with the specified project.
+        /// </summary>
+        /// <param name="project">The project to assign the time to.</param>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="endTime">The end time, or null to not assign an end time.</param>
+        /// <returns></returns>
+        IProjectTime CreateTime(IProject project, DateTime startTime, DateTime? endTime);
+
+        #endregion
     }
 
     public enum ProjectStatus

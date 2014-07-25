@@ -472,6 +472,7 @@ namespace Ficksworkshop.TimeTrackerAPI {
                 base.Columns.Add(this.columnProjectID);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnProjectID}, false));
+                this.columnIsActive.DefaultValue = ((bool)(true));
                 this.columnProjectID.AutoIncrement = true;
                 this.columnProjectID.AllowDBNull = false;
                 this.columnProjectID.ReadOnly = true;

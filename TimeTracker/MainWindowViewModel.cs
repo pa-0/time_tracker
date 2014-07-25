@@ -47,6 +47,8 @@ namespace Ficksworkshop.TimeTracker
 
         public ICommand DeleteProjectCommand { get; private set; }
 
+        public ICommand PunchInOutCommand { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -72,6 +74,7 @@ namespace Ficksworkshop.TimeTracker
 
             // Commands
             DeleteProjectCommand = new DeleteProjectCommand(() => dataSet, () => _selectedProject);
+            PunchInOutCommand = new PunchInOutCommand(() => dataSet, () => _selectedProject);
         }
 
         #endregion

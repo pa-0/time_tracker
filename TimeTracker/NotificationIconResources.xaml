@@ -6,7 +6,7 @@
         <MenuItem Header="Projects" ItemsSource="{Binding ActiveProjects}">
             <MenuItem.ItemContainerStyle>
                 <Style>
-                    <Setter Property="MenuItem.Header" Value="{Binding Description}"/>
+                    <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
                     <Setter Property="MenuItem.Command" Value="{Binding ActivateProjectCommand}"/>
                 </Style>
             </MenuItem.ItemContainerStyle>

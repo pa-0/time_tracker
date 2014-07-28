@@ -2,6 +2,8 @@
 
 namespace Ficksworkshop.TimeTracker
 {
+    public delegate void ProjectsChangedEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet);
+
     /// <summary>
     /// This application allows you to have a single set of time information. This
     /// is that single instance and how you access it. This essentially maanages the
@@ -21,6 +23,11 @@ namespace Ficksworkshop.TimeTracker
                 if (dataSet == null)
                 {
                     dataSet = new XmlDataSetProjectTimesData(null);
+
+                    if (DataSetChangedEvent != null)
+                    {
+                        DataSetChangedEvent.Invoke(null, dataSet);
+                    }
                 }
                 return dataSet;
             }
@@ -47,6 +54,8 @@ namespace Ficksworkshop.TimeTracker
                 settings = value;
             }
         }
+
+        public static event ProjectsChangedEventHandler DataSetChangedEvent;
 
         #endregion
     }

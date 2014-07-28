@@ -8,6 +8,8 @@ namespace Ficksworkshop.TimeTracker
 {
     public class NotificationIconViewModel : INotifyPropertyChanged
     {
+        #region Properties
+
         private bool _isPunchedIn = false;
 
         public bool IsPunchedIn
@@ -26,8 +28,11 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        private ObservableCollection<IProject> _activeProjects;
+        private ObservableCollection<IProject> _activeProjects = new ObservableCollection<IProject>();
 
+        /// <summary>
+        /// The list of projects that we can punch in or punch out of.
+        /// </summary>
         public ObservableCollection<IProject> ActiveProjects
         {
             get
@@ -52,6 +57,25 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
+        #endregion
+
+        #region Constructors
+
+        public NotificationIconViewModel()
+        {
+            // When we are constructed, we need to listen to events coming from the data
+            // set so that we can update our local view.
+            TrackerInstance.DataSetChangedEvent += DataContextChangedEventHandler;
+            if (TrackerInstance.DataSet != null)
+            {
+                TrackerInstance.DataSet.ProjectsChanged += ProjectsChangedEventHandler;
+            }
+        }
+
+        #endregion
+
+        #region INotifyPropertyChanged Members
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void NotifyPropertyChanged(string propertyName)
@@ -61,5 +85,40 @@ namespace Ficksworkshop.TimeTracker
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #endregion
+
+        #region Private Members
+
+        private void ProjectsChangedEventHandler(object sender, object e)
+        {
+            // Refresh the list of active projects
+            ActiveProjects.Clear();
+            foreach (var project in TrackerInstance.DataSet.Projects)
+            {
+                if (project.Status != ProjectStatus.Closed)
+                {
+                    ActiveProjects.Add(project);
+                }
+            }
+        }
+
+        private void DataContextChangedEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet)
+        {
+            // If we completely change the data set, then unsubscribe from the old data set, subscribe to the new
+            // one, and update our projects
+            if (oldDataSet != null)
+            {
+                oldDataSet.ProjectsChanged -= ProjectsChangedEventHandler;
+            }
+            if (newDataSet != null)
+            {
+                newDataSet.ProjectsChanged += ProjectsChangedEventHandler;
+            }
+
+            ProjectsChangedEventHandler(null, null);
+        }
+
+        #endregion
     }
 }

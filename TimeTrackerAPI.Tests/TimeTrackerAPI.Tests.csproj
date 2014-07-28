@@ -53,6 +53,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Commands\CreateProjectCommand.UnitTest.cs" />
+    <Compile Include="Commands\DeleteProjectCommand.UnitTest.cs" />
+    <Compile Include="Mock\MemoryProjectTimesData.cs" />
     <Compile Include="XmlDataSetProjectTimesData.UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

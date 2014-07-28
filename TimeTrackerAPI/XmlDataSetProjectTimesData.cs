@@ -53,7 +53,10 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             IProject project = new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", true));
 
-            ProjectsChanged.Invoke(this, project);
+            if (ProjectsChanged != null)
+            {
+                ProjectsChanged.Invoke(this, project);
+            }
 
             return project;
         }
@@ -65,7 +68,10 @@ namespace Ficksworkshop.TimeTrackerAPI
             {
                 DataSet.Projects.RemoveProjectsRow(xmlProject.ProjectsRow);
 
-                ProjectsChanged.Invoke(this, project);
+                if (ProjectsChanged != null)
+                {
+                    ProjectsChanged.Invoke(this, project);
+                }
             }
             else
             {
@@ -92,7 +98,7 @@ namespace Ficksworkshop.TimeTrackerAPI
             var xmlProject = project as XmlDataSetProjectProxy;
             if (xmlProject != null)
             {
-                return new XmlDataSetProjectTimeProxy(DataSet, DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? DateTime.MinValue));
+                return new XmlDataSetProjectTimeProxy(DataSet, DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? XmlDataSetProjectTimeProxy.EmptyDateTime));
             }
             else
             {
@@ -219,6 +225,8 @@ namespace Ficksworkshop.TimeTrackerAPI
         // TODO this is needed to return the project, but it is stupid to have it
         private readonly TimesDataSet _dataSet;
 
+        public static readonly DateTime EmptyDateTime = DateTime.MinValue;
+
         #endregion
 
         #region Constructors
@@ -252,15 +260,20 @@ namespace Ficksworkshop.TimeTrackerAPI
         }
 
         /// <inheritdoc/>
-        public DateTime End
+        public DateTime? End
         {
             get
             {
+                if (_timeRow.End == EmptyDateTime)
+                {
+                    return null;
+                }
                 return _timeRow.End;
             }
             set
             {
-                _timeRow.End = value;
+                // If we try to set to null, set to the special "null" value
+                _timeRow.End = (value.HasValue) ? value.Value : EmptyDateTime;
             }
         }
 

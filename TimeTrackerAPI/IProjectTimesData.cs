@@ -73,7 +73,7 @@ namespace Ficksworkshop.TimeTrackerAPI
     {
         DateTime Start { get; set; }
 
-        DateTime End { get; set; }
+        DateTime? End { get; set; }
 
         IProject Project { get; }
     }

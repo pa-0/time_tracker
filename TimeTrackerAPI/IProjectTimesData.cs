@@ -5,6 +5,8 @@ namespace Ficksworkshop.TimeTrackerAPI
 {
     public delegate void ProjectsChangedEventHandler(object sender, object e);
 
+    public delegate void TimesChangedEventHandler(object sender, IProjectTimesData dataSet, IProjectTime modifiedTime);
+
     /// <summary>
     /// Represents the view of project times data that is exposed externally. The purpose of these
     /// interfaces is to allow chaning out the core data storage without affecting clients of the API.
@@ -50,6 +52,11 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <param name="endTime">The end time, or null to not assign an end time.</param>
         /// <returns></returns>
         IProjectTime CreateTime(IProject project, DateTime startTime, DateTime? endTime);
+
+        /// <summary>
+        /// Event fires whenever the project times information changes.
+        /// </summary>
+        event TimesChangedEventHandler ProjectTimeChanged;
 
         #endregion
     }

@@ -97,13 +97,20 @@ namespace Ficksworkshop.TimeTrackerAPI
             var xmlProject = project as XmlDataSetProjectProxy;
             if (xmlProject != null)
             {
-                return new XmlDataSetProjectTimeProxy(DataSet, DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? XmlDataSetProjectTimeProxy.EmptyDateTime));
+                var projectTime = new XmlDataSetProjectTimeProxy(DataSet, DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? XmlDataSetProjectTimeProxy.EmptyDateTime));
+
+                ProjectTimeChanged.Invoke(this, this, projectTime);
+
+                return projectTime;
             }
             else
             {
                 throw new ArgumentException("Project is not a project from this data set.");
             }
         }
+
+        /// <inheritdoc />
+        public event TimesChangedEventHandler ProjectTimeChanged;
 
         #endregion
 

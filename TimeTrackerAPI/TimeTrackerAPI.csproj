@@ -50,6 +50,8 @@
     <Compile Include="Commands\DeleteProjectCommand.cs" />
     <Compile Include="Commands\PunchInOutCommand.cs" />
     <Compile Include="IProjectTimesData.cs" />
+    <Compile Include="ProjectTimeExtensions.cs" />
+    <Compile Include="ProjectTimesDataExtensions.cs" />
     <Compile Include="XmlDataSetProjectTimesData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimesDataSet.cs">

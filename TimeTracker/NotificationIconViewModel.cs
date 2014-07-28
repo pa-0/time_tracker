@@ -1,8 +1,8 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-
 using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTrackerAPI.Commands;
 
 namespace Ficksworkshop.TimeTracker
 {
@@ -10,7 +10,7 @@ namespace Ficksworkshop.TimeTracker
     {
         #region Properties
 
-        private bool _isPunchedIn = false;
+        private bool _isPunchedIn;
 
         public bool IsPunchedIn
         {
@@ -18,7 +18,7 @@ namespace Ficksworkshop.TimeTracker
             {
                 return _isPunchedIn;
             }
-            set
+            private set
             {
                 if (value != _isPunchedIn)
                 {
@@ -49,13 +49,7 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        public ICommand TogglePunchStateCommand
-        {
-            get
-            {
-                return new DelegateCommand { CanExecuteFunc = () => true, CommandAction = () => { IsPunchedIn = !IsPunchedIn; } };
-            }
-        }
+        public ICommand TogglePunchStateCommand;
 
         #endregion
 
@@ -69,7 +63,10 @@ namespace Ficksworkshop.TimeTracker
             if (TrackerInstance.DataSet != null)
             {
                 TrackerInstance.DataSet.ProjectsChanged += ProjectsChangedEventHandler;
+                TrackerInstance.DataSet.ProjectTimeChanged += ProjectTimeChangedEventHandler;
             }
+
+            TogglePunchStateCommand = new PunchInOutCommand(() => TrackerInstance.DataSet, () => null);
         }
 
         #endregion
@@ -103,6 +100,12 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
+        private void ProjectTimeChangedEventHandler(object sender, IProjectTimesData dataSet, IProjectTime modifiedTime)
+        {
+            // Refresh the is punched in value
+            IsPunchedIn = (dataSet.PunchedInTime() != null);
+        }
+
         private void DataContextChangedEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet)
         {
             // If we completely change the data set, then unsubscribe from the old data set, subscribe to the new
@@ -110,10 +113,12 @@ namespace Ficksworkshop.TimeTracker
             if (oldDataSet != null)
             {
                 oldDataSet.ProjectsChanged -= ProjectsChangedEventHandler;
+                oldDataSet.ProjectTimeChanged -= ProjectTimeChangedEventHandler;
             }
             if (newDataSet != null)
             {
                 newDataSet.ProjectsChanged += ProjectsChangedEventHandler;
+                newDataSet.ProjectTimeChanged += ProjectTimeChangedEventHandler;
             }
 
             ProjectsChangedEventHandler(null, null);

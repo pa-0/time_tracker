@@ -61,6 +61,9 @@ namespace TimeTrackerAPI.Tests.Mock
         /// <inheritdoc />
         public event ProjectsChangedEventHandler ProjectsChanged;
 
+        /// <inheritdoc />
+        public event TimesChangedEventHandler ProjectTimeChanged;
+
         #endregion
 
         #region Nested Types

@@ -99,7 +99,8 @@ namespace Ficksworkshop.TimeTrackerAPI
             {
                 var projectTime = new XmlDataSetProjectTimeProxy(DataSet, DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? XmlDataSetProjectTimeProxy.EmptyDateTime));
 
-                ProjectTimeChanged.Invoke(this, this, projectTime);
+                var eventArgs = new TimesChangedEventArgs(this, projectTime);
+                ProjectTimeChanged.Invoke(this, eventArgs);
 
                 return projectTime;
             }

@@ -5,7 +5,31 @@ namespace Ficksworkshop.TimeTrackerAPI
 {
     public delegate void ProjectsChangedEventHandler(object sender, object e);
 
-    public delegate void TimesChangedEventHandler(object sender, IProjectTimesData dataSet, IProjectTime modifiedTime);
+    public delegate void TimesChangedEventHandler(object sender, TimesChangedEventArgs eventArgs);
+
+    public class TimesChangedEventArgs : EventArgs
+    {
+        /// <summary>
+        /// The data set that owns the time.
+        /// </summary>
+        public IProjectTimesData DataSet { get; private set; }
+
+        /// <summary>
+        /// The time that was modified.
+        /// </summary>
+        public IProjectTime ModifiedTime { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TimesChangedEventArgs"/> class.
+        /// </summary>
+        /// <param name="dataSet">The data set that owns the time.</param>
+        /// <param name="modifiedTime">The time that was modified.</param>
+        public TimesChangedEventArgs(IProjectTimesData dataSet, IProjectTime modifiedTime)
+        {
+            DataSet = dataSet;
+            ModifiedTime = modifiedTime;
+        }
+    }
 
     /// <summary>
     /// Represents the view of project times data that is exposed externally. The purpose of these

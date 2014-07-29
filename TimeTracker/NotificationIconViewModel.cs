@@ -100,10 +100,10 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        private void ProjectTimeChangedEventHandler(object sender, IProjectTimesData dataSet, IProjectTime modifiedTime)
+        private void ProjectTimeChangedEventHandler(object sender, TimesChangedEventArgs eventArgs)
         {
             // Refresh the is punched in value
-            IsPunchedIn = (dataSet.PunchedInTime() != null);
+            IsPunchedIn = (eventArgs.DataSet.PunchedInTime() != null);
         }
 
         private void DataContextChangedEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet)

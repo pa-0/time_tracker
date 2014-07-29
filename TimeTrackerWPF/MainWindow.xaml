@@ -6,13 +6,13 @@
         <Label Content="Projects"/>
         <DockPanel Margin="15,0,0,0">
             <StackPanel DockPanel.Dock="Right">
-                <Button Click="AddClicked" Content="Add" Margin="3,0,3,3" MinWidth="75"/>
-                <Button Click="DeleteClicked" Content="Delete" Margin="3" MinWidth="75"/>
+                <Label Content="Name" Margin="0,0,3,3" HorizontalAlignment="Left"/>
+                <TextBox x:Name="_newProjectName" Margin="3,0,3,3" MinWidth="100" HorizontalAlignment="Left"/>
+                <Button Click="AddClicked" Content="Add" Margin="3,0,3,3" Width="75" HorizontalAlignment="Left"/>
             </StackPanel>
-            <DataGrid x:Name="_projects" Margin="3,0,0,3" MinHeight="150">
+            <DataGrid x:Name="_projectsGrid" Margin="3,0,0,3" MinHeight="150" AutoGenerateColumns="False" SelectionMode="Single" ItemsSource="{Binding}" SelectedCellsChanged="SelectedCellsChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id"/>
-                    <DataGridTextColumn Header="Name"/>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </DockPanel>
@@ -31,6 +31,6 @@
             <Label Content="Status:" Grid.Row="1" Grid.Column="0"/>
             <Label x:Name="_status" Content="&lt;None&gt;" Grid.Row="1" Grid.Column="1"/>
         </Grid>
-        <Button Click="PunchInOutClicked"  Margin="20,0,0,0" Content="Punch In/Out" Width="75" HorizontalAlignment="Left"/>
+        <Button x:Name="_punchInOut" Click="PunchInOutClicked"  Margin="20,0,0,0" Content="Punch In" Width="75" HorizontalAlignment="Left"/>
     </StackPanel>
 </Window>

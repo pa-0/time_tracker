@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using System.Collections.ObjectModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
 using Ficksworkshop.TimeTrackerAPI;
 
 namespace Ficksworkshop.TimeTracker
@@ -8,26 +11,59 @@ namespace Ficksworkshop.TimeTracker
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly IProjectTimesData _dataSet;
+        #region Fields
+
+        private readonly IProjectTimesData _dataSet = TrackerInstance.DataSet;
+
+        private readonly ObservableCollection<IProject> _projects = new ObservableCollection<IProject>();
+
+        #endregion
 
         public MainWindow()
         {
             InitializeComponent();
+
+            _dataSet.ProjectsChanged += DataSetOnProjectsChanged;
+            this.DataContext = _projects;
+        }
+
+        private void DataSetOnProjectsChanged(object sender, object o)
+        {
+            _projects.Clear();
+            foreach (IProject project in _dataSet.Projects)
+            {
+                _projects.Add(project);
+            }
         }
 
         private void AddClicked(object sender, RoutedEventArgs e)
         {
-            
+            IProject project = _dataSet.CreateProject();
+            project.Name = _newProjectName.Text;
         }
 
-        private void DeleteClicked(object sender, RoutedEventArgs e)
+        private void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
+            DataGridCellInfo addedCell = e.AddedCells.FirstOrDefault();
+            IProject project = (addedCell != default(DataGridCellInfo)) ? (IProject)addedCell.Item : null;
 
+            if (project != null)
+            {
+                _selectedProject.Content = project.Name;
+                _punchInOut.IsEnabled = true;
+            }
+            else
+            {
+                _selectedProject.Content = "<None>";
+                _punchInOut.IsEnabled = false;
+            }
         }
 
         private void PunchInOutClicked(object sender, RoutedEventArgs e)
         {
 
         }
+
+
     }
 }

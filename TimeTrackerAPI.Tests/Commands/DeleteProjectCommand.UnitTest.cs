@@ -1,10 +1,9 @@
 ﻿using System.Linq;
-using Ficksworkshop.TimeTrackerAPI;
 using Ficksworkshop.TimeTrackerAPI.Commands;
+using Ficksworkshop.TimeTrackerAPI.Tests.Mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TimeTrackerAPI.Tests.Mock;
 
-namespace TimeTrackerAPI.Tests.Commands
+namespace Ficksworkshop.TimeTrackerAPI.Tests.Commands
 {
     [TestClass]
     public class DeleteProjectCommandUnitTest

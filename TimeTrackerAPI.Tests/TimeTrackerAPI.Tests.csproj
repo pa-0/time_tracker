@@ -6,7 +6,7 @@
     <ProjectGuid>{E4B7698B-A8C3-4201-8AA9-C62DC2125DD9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TimeTrackerAPI.Tests</RootNamespace>
+    <RootNamespace>Ficksworkshop.TimeTrackerAPI</RootNamespace>
     <AssemblyName>TimeTrackerAPI.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

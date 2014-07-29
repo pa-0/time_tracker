@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Ficksworkshop.TimeTrackerAPI;
 
-namespace TimeTrackerAPI.Tests.Mock
+namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
 {
     /// <summary>
     /// An implementation of the <see cref="IProjectTimesData"/> that exists only in memory

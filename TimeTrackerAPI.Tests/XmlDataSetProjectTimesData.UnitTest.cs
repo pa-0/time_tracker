@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ficksworkshop.TimeTrackerAPI;
 
-namespace TimeTrackerAPI.Tests
+namespace Ficksworkshop.TimeTrackerAPI.Tests
 {
     [TestClass]
     public class XmlDataSetProjectTimesDataUnitTest

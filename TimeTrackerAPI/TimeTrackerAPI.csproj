@@ -52,6 +52,7 @@
     <Compile Include="IProjectTimesData.cs" />
     <Compile Include="ProjectTimeExtensions.cs" />
     <Compile Include="ProjectTimesDataExtensions.cs" />
+    <Compile Include="TrackerInstance.cs" />
     <Compile Include="XmlDataSetProjectTimesData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TimesDataSet.cs">

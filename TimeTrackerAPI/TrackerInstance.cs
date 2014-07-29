@@ -1,8 +1,6 @@
-﻿using Ficksworkshop.TimeTrackerAPI;
-
-namespace Ficksworkshop.TimeTracker
+﻿namespace Ficksworkshop.TimeTrackerAPI
 {
-    public delegate void ProjectsChangedEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet);
+    public delegate void DataSetEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet);
 
     /// <summary>
     /// This application allows you to have a single set of time information. This
@@ -10,12 +8,18 @@ namespace Ficksworkshop.TimeTracker
     /// singleton outside of the API project, bucause the API allows multiple instances
     /// of tracker data.
     /// </summary>
+    /// <remarks>This code doesn't really belong in the the API project. It exists here
+    /// so that the demonstration projects can make use of it (without copying the code
+    /// or creating another assembly, which would complicate the demonstration).</remarks>
     public class TrackerInstance
     {
         #region Properties
 
         private static IProjectTimesData dataSet;
 
+        /// <summary>
+        /// Gets the singleton data set instance that we are currently using in the application.
+        /// </summary>
         public static IProjectTimesData DataSet
         {
             get
@@ -31,14 +35,13 @@ namespace Ficksworkshop.TimeTracker
                 }
                 return dataSet;
             }
-            private set
-            {
-                dataSet = value;
-            }
         }
 
         private static TrackerSettings settings;
 
+        /// <summary>
+        /// Gets the singleton settings instance that we are currently using in the application.
+        /// </summary>
         public static TrackerSettings Settings
         {
             get
@@ -49,13 +52,12 @@ namespace Ficksworkshop.TimeTracker
                 }
                 return settings;
             }
-            private set
-            {
-                settings = value;
-            }
         }
 
-        public static event ProjectsChangedEventHandler DataSetChangedEvent;
+        /// <summary>
+        /// Event fires whenever the data set instance changes.
+        /// </summary>
+        public static event DataSetEventHandler DataSetChangedEvent;
 
         #endregion
     }

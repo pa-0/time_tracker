@@ -4,6 +4,26 @@ using System.Linq;
 
 namespace Ficksworkshop.TimeTrackerAPI
 {
+    /// <summary>
+    /// Represents a group of related times for the same project.
+    /// </summary>
+    public class ProjectTimesGroup
+    {
+        public IProject Project { get; private set; }
+
+        public IList<IProjectTime> ProjectTimes { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectTimesGroup"/> class.
+        /// </summary>
+        /// <param name="project">The project this represents.</param>
+        internal ProjectTimesGroup(IProject project)
+        {
+            Project = project;
+            ProjectTimes = new List<IProjectTime>();
+        }
+    }
+
     public static class ProjectTimeExtensions
     {
         /// <summary>
@@ -16,25 +36,6 @@ namespace Ficksworkshop.TimeTrackerAPI
         public static IEnumerable<IProjectTime> TimesInRange(this IEnumerable<IProjectTime> times, DateTime start, DateTime end)
         {
             return times.Where(item => item.Start > start && item.End.HasValue && item.End.Value < end);
-        }
-
-        /// <summary>
-        /// Represents a group of related times for the same project.
-        /// </summary>
-        public class ProjectTimesGroup
-        {
-            public IProject Project { get; private set; }
-
-            public IList<IProjectTime> ProjectTimes { get; private set; }
-
-            /// <summary>
-            /// Initializes a new instance of the <see cref="ProjectTimesGroup"/> class.
-            /// </summary>
-            /// <param name="project">The project this represents.</param>
-            internal ProjectTimesGroup(IProject project)
-            {
-                Project = project;
-            }
         }
 
         /// <summary>

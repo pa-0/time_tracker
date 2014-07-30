@@ -30,7 +30,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Commands
         public void DeleteProjetCommand_CanExecute_HasProject_ReturnsTrue()
         {
             var dataSet = new MemoryProjectTimesData();
-            IProject project = dataSet.CreateProject();
+            IProject project = dataSet.CreateProject("", "");
             var command = new DeleteProjectCommand(() => dataSet, () => project);
             Assert.IsTrue(command.CanExecute(null));
         }
@@ -40,7 +40,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Commands
         public void DeleteProjetCommand_Execute_HasProject_DeletedProject()
         {
             var dataSet = new MemoryProjectTimesData();
-            IProject project = dataSet.CreateProject();
+            IProject project = dataSet.CreateProject("", "");
             var command = new DeleteProjectCommand(() => dataSet, () => project);
             
             command.Execute(null);

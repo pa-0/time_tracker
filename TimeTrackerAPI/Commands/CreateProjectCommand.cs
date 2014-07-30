@@ -34,7 +34,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
             IProjectTimesData dataSet = _commandContextFunc.Invoke();
             if (dataSet != null)
             {
-                dataSet.CreateProject();
+                dataSet.CreateProject("", "");
             }
         }
 

@@ -21,6 +21,10 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// </summary>
         private TimesDataSet DataSet { get; set; }
 
+        private XmlDataSetProjectProxyFactory _projectProxyFactory;
+
+        private XmlDataSetProjectTimeProxyFactory _timeProxyFactory;
+
         #endregion
 
         #region Constructors
@@ -32,6 +36,10 @@ namespace Ficksworkshop.TimeTrackerAPI
         public XmlDataSetProjectTimesData(Stream inputStream)
         {
             LoadDatabase(inputStream);
+
+            _projectProxyFactory = new XmlDataSetProjectProxyFactory();
+
+            _timeProxyFactory = new XmlDataSetProjectTimeProxyFactory(this);
         }
 
         #endregion
@@ -43,21 +51,14 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             get
             {
-                return DataSet.Projects.Select(dp => new XmlDataSetProjectProxy(dp));
+                return DataSet.Projects.Select(dp => _projectProxyFactory.Create(dp));
             }
         }
 
         /// <inheritdoc />
-        public IProject CreateProject()
+        public IProject CreateProject(string uniqueId, string name)
         {
-            IProject project = new XmlDataSetProjectProxy(DataSet.Projects.AddProjectsRow("Default Id", "Default Name", true));
-
-            if (ProjectsChanged != null)
-            {
-                ProjectsChanged.Invoke(this, project);
-            }
-
-            return project;
+            return _projectProxyFactory.Create(DataSet.Projects.AddProjectsRow(uniqueId, name, true));
         }
 
         public void DeleteProject(IProject project)
@@ -66,11 +67,6 @@ namespace Ficksworkshop.TimeTrackerAPI
             if (xmlProject != null)
             {
                 DataSet.Projects.RemoveProjectsRow(xmlProject.ProjectsRow);
-
-                if (ProjectsChanged != null)
-                {
-                    ProjectsChanged.Invoke(this, project);
-                }
             }
             else
             {
@@ -87,7 +83,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             get
             {
-                return DataSet.Times.Select(dt => new XmlDataSetProjectTimeProxy(DataSet, dt));
+                return DataSet.Times.Select(dt => _timeProxyFactory.Create(dt));
             }
         }
 
@@ -97,12 +93,7 @@ namespace Ficksworkshop.TimeTrackerAPI
             var xmlProject = project as XmlDataSetProjectProxy;
             if (xmlProject != null)
             {
-                var projectTime = new XmlDataSetProjectTimeProxy(DataSet, DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? XmlDataSetProjectTimeProxy.EmptyDateTime));
-
-                var eventArgs = new TimesChangedEventArgs(this, projectTime);
-                ProjectTimeChanged.Invoke(this, eventArgs);
-
-                return projectTime;
+                return _timeProxyFactory.Create(DataSet.Times.AddTimesRow(xmlProject.ProjectsRow.ProjectID, startTime, endTime ?? XmlDataSetProjectTimeProxy.EmptyDateTime));
             }
             else
             {
@@ -137,6 +128,8 @@ namespace Ficksworkshop.TimeTrackerAPI
             {
                 dataTable.EndLoadData();
             }
+
+            SubscribeToEvents();
         }
 
         /// <summary>
@@ -148,151 +141,36 @@ namespace Ficksworkshop.TimeTrackerAPI
             DataSet.WriteXml(stream);
         }
 
-    }
-
-    /// <summary>
-    /// Envoy for the <see cref="TimesDataSet.ProjectsRow"/> to represent as an <see cref="IProject"/>.
-    /// </summary>
-    internal class XmlDataSetProjectProxy : IProject
-    {
-        #region Properties
-
-        internal TimesDataSet.ProjectsRow ProjectsRow { get; private set; }
-
-        #endregion
-
-        #region Constructors
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="XmlDataSetProjectProxy"/> class.
+        /// We need to notify our clients of when the model changes - so we subscribe to the events from
+        /// the data set so we can notify our clients.
         /// </summary>
-        /// <param name="project"></param>
-        public XmlDataSetProjectProxy(TimesDataSet.ProjectsRow project)
+        private void SubscribeToEvents()
         {
-            ProjectsRow = project;
-        }
-
-        #endregion
-
-        #region IProject Members
-
-        /// <inheritdoc/>
-        public string Name
-        {
-            get
+            if (DataSet != null)
             {
-                return ProjectsRow.Name;
-            }
-            set
-            {
-                // TODO notify
-                ProjectsRow.Name = value;
+                DataSet.Projects.ProjectsRowChanged += (sender, @event) => FireProjectsChangedEvent(@event.Row);;
+                DataSet.Projects.ProjectsRowDeleted += (sender, @event) => FireProjectsChangedEvent(@event.Row);
+
+                DataSet.Times.TimesRowChanged += (sender, @event) => FireTimesChangedEvent(@event.Row);
             }
         }
 
-        /// <inheritdoc/>
-        public string UniqueId
+        private void FireProjectsChangedEvent(TimesDataSet.ProjectsRow projectRow)
         {
-            get
+            if (ProjectsChanged != null)
             {
-                return ProjectsRow.Identifier;
-            }
-            set
-            {
-                // TODO notify
-                ProjectsRow.Identifier = value;
+                ProjectsChanged.Invoke(this, _projectProxyFactory.Create(projectRow));
             }
         }
 
-        /// <inheritdoc/>
-        public ProjectStatus Status
+        private void FireTimesChangedEvent(TimesDataSet.TimesRow timesRow)
         {
-            get
+            if (ProjectTimeChanged != null)
             {
-                return (ProjectsRow.IsActive) ? ProjectStatus.Open : ProjectStatus.Closed;
-            }
-            set
-            {
-                ProjectsRow.IsActive = (value == ProjectStatus.Open);
+                var eventArgs = new TimesChangedEventArgs(this, _timeProxyFactory.Create(timesRow));
+                ProjectTimeChanged.Invoke(this, eventArgs);
             }
         }
-
-        #endregion
-    }
-
-    /// <summary>
-    /// Envoy for the <see cref="TimesDataSet.TimesRow"/> to represent as an <see cref="IProjectTime"/>.
-    /// </summary>
-    internal class XmlDataSetProjectTimeProxy : IProjectTime
-    {
-        #region Fields
-
-        private readonly TimesDataSet.TimesRow _timeRow;
-
-        // TODO this is needed to return the project, but it is stupid to have it
-        private readonly TimesDataSet _dataSet;
-
-        public static readonly DateTime EmptyDateTime = DateTime.MinValue;
-
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="XmlDataSetProjectTimeProxy"/> class.
-        /// </summary>
-        /// <param name="dataSet">The data set that owns the time information,</param>
-        /// <param name="timeRow">The time row.</param>
-        internal XmlDataSetProjectTimeProxy(TimesDataSet dataSet, TimesDataSet.TimesRow timeRow)
-        {
-            _dataSet = dataSet;
-            _timeRow = timeRow;
-        }
-
-        #endregion
-
-        #region IProjectTime Members
-
-        /// <inheritdoc/>
-        public DateTime Start
-        {
-            get
-            {
-                return _timeRow.Start;
-            }
-            set
-            {
-                _timeRow.Start = value;
-            }
-        }
-
-        /// <inheritdoc/>
-        public DateTime? End
-        {
-            get
-            {
-                if (_timeRow.End == EmptyDateTime)
-                {
-                    return null;
-                }
-                return _timeRow.End;
-            }
-            set
-            {
-                // If we try to set to null, set to the special "null" value
-                _timeRow.End = (value.HasValue) ? value.Value : EmptyDateTime;
-            }
-        }
-
-        /// <inheritdoc/>
-        public IProject Project
-        {
-            get
-            {
-                return new XmlDataSetProjectProxy(_dataSet.Projects.First(dp => dp.ProjectID == _timeRow.ProjectID));
-            }
-        }
-
-        #endregion
     }
 }

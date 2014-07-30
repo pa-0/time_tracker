@@ -38,8 +38,7 @@ namespace Ficksworkshop.TimeTracker
 
         private void AddClicked(object sender, RoutedEventArgs e)
         {
-            IProject project = _dataSet.CreateProject();
-            project.Name = _newProjectName.Text;
+             _dataSet.CreateProject("", _newProjectName.Text);
         }
 
         private void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)

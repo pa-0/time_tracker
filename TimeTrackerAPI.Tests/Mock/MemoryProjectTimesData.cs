@@ -16,7 +16,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
         #region IProjectTimesData Members
 
         /// <inheritdoc />
-        public IProject CreateProject()
+        public IProject CreateProject(string uniqueId, string name)
         {
             return new MemoryProject();
         }

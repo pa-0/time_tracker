@@ -49,7 +49,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// Creates a new project instance.
         /// </summary>
         /// <returns>The new project instance.</returns>
-        IProject CreateProject();
+        IProject CreateProject(string uniqueId, string name);
 
         /// <summary>
         /// Deletes a project instance.

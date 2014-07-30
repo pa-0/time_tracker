@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 
 namespace Ficksworkshop.TimeTrackerAPI
@@ -91,7 +92,9 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// Initializes a new instance of the <see cref="XmlDataSetProjectTimeProxyFactory"/> class.
         /// </summary>
         /// <param name="dataSet">The data set this generates time proxies for.</param>
-        internal XmlDataSetProjectTimeProxyFactory(XmlDataSetProjectTimesData dataSet)
+        /// <param name="table">The table that contains the rows.</param>
+        internal XmlDataSetProjectTimeProxyFactory(XmlDataSetProjectTimesData dataSet, TypedTableBase<TimesDataSet.TimesRow> table)
+            : base(table)
         {
             _dataSet = dataSet;
         }

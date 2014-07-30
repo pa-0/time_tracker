@@ -37,9 +37,9 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             LoadDatabase(inputStream);
 
-            _projectProxyFactory = new XmlDataSetProjectProxyFactory();
+            _projectProxyFactory = new XmlDataSetProjectProxyFactory(DataSet.Projects);
 
-            _timeProxyFactory = new XmlDataSetProjectTimeProxyFactory(this);
+            _timeProxyFactory = new XmlDataSetProjectTimeProxyFactory(this, DataSet.Times);
         }
 
         #endregion

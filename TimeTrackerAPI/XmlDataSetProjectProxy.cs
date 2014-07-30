@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -79,6 +80,15 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// </summary>
     internal class XmlDataSetProjectProxyFactory : XmlDataSetProxyFactory<TimesDataSet.ProjectsRow, XmlDataSetProjectProxy>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="XmlDataSetProjectProxyFactory"/> class.
+        /// </summary>
+        /// <param name="table">The table that contains the rows.</param>
+        internal XmlDataSetProjectProxyFactory(TypedTableBase<TimesDataSet.ProjectsRow> table)
+            : base(table)
+        {
+        }
+
         /// <inheritdoc/>
         protected override XmlDataSetProjectProxy CreateInstance(TimesDataSet.ProjectsRow row)
         {

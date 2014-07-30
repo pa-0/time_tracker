@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
@@ -18,13 +19,13 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// </summary>
     /// <typeparam name="TRow">The type of row this proxy returns.</typeparam>
     /// <typeparam name="TProxy">The type of proxy this returns.</typeparam>
-    abstract internal class XmlDataSetProxyFactory<TRow, TProxy>
+    abstract internal class XmlDataSetProxyFactory<TRow, TProxy> where TRow : DataRow
     {
         private readonly Dictionary<TRow, TProxy> _allocatedItems = new Dictionary<TRow, TProxy>();
 
-        internal XmlDataSetProxyFactory()
+        internal XmlDataSetProxyFactory(TypedTableBase<TRow> table)
         {
-            
+            table.RowDeleting += RowIsDeletingHandler;
         }
 
         /// <summary>
@@ -45,6 +46,12 @@ namespace Ficksworkshop.TimeTrackerAPI
             _allocatedItems[rowItem] = existingProxy;
 
             return existingProxy;
+        }
+
+        private void RowIsDeletingHandler(object sender, DataRowChangeEventArgs args)
+        {
+            // If a row is deleted, we need to also remove it from our proxy factory (or we have a leak)
+            _allocatedItems.Remove((TRow) args.Row);
         }
 
         /// <summary>

@@ -30,6 +30,7 @@
             <Label Content="Status:" Grid.Row="1" Grid.Column="0"/>
             <Label x:Name="_status" Content="&lt;None&gt;" Grid.Row="1" Grid.Column="1"/>
         </Grid>
-        <Button x:Name="_punchInOut" Margin="20,0,0,0" Content="Punch In" Width="75" HorizontalAlignment="Left"/>
+        <!-- Click="PunchInOutClicked"-->
+        <Button x:Name="_punchInOut" Margin="20,0,0,0" Content="Punch In/Out" Width="75" HorizontalAlignment="Left"/>
     </StackPanel>
 </Window>

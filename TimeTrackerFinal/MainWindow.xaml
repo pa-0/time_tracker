@@ -1,0 +1,36 @@
+﻿<Window x:Class="Ficksworkshop.TimeTracker.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="500">
+    <StackPanel>
+        <Label Content="Projects"/>
+        <DockPanel Margin="15,0,0,0">
+            <StackPanel DockPanel.Dock="Right">
+                <Label Content="Name" Margin="0,0,3,3" HorizontalAlignment="Left"/>
+                <TextBox Text="{Binding NewProjectName}" Margin="3,0,3,3" MinWidth="100" HorizontalAlignment="Left"/>
+                <Button Click="AddClicked" Content="Add" Margin="3,0,3,3" Width="75" HorizontalAlignment="Left"/>
+            </StackPanel>
+            <DataGrid ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" Margin="3,0,0,3" MinHeight="150" AutoGenerateColumns="False" SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </DockPanel>
+        <Label Content="Selected Project"/>
+        <Grid Margin="15,0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Label Content="Name:" Grid.Row="0" Grid.Column="0"/>
+            <Label Content="{Binding SelectedProject}" Grid.Row="0" Grid.Column="1"/>
+            <Label Content="Status:" Grid.Row="1" Grid.Column="0"/>
+            <Label Content="{Binding Status}" Grid.Row="1" Grid.Column="1"/>
+        </Grid>
+        <Button Command="{Binding PunchInOutCommand}" Margin="20,0,0,0" Content="Punch In/Out" Width="75" HorizontalAlignment="Left"/>
+    </StackPanel>
+</Window>

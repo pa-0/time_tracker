@@ -12,12 +12,8 @@
                 <!-- Click="AddClicked"-->
                 <Button Content="Add" Margin="3,0,3,3" Width="75" HorizontalAlignment="Left"/>
             </StackPanel>
-            <!-- ItemsSource={Binding} -->
-            <DataGrid x:Name="_projectsGrid" Margin="3,0,0,3" MinHeight="150" AutoGenerateColumns="False" SelectionMode="Single">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name" Binding="{Binding Path=Name}"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <!-- x:Name="_projectsList" -->
+            <ListBox Margin="3,0,0,3" MinHeight="150"/>
         </DockPanel>
         <Label Content="Selected Project"/>
         <Grid Margin="15,0,0,0">

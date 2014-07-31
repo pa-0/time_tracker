@@ -103,7 +103,7 @@ namespace Ficksworkshop.TimeTracker
         private void ProjectTimeChangedEventHandler(object sender, TimesChangedEventArgs eventArgs)
         {
             // Refresh the is punched in value
-            IsPunchedIn = (eventArgs.DataSet.PunchedInTime() != null);
+            IsPunchedIn = (eventArgs.DataSet.FirstOpenTime() != null);
         }
 
         private void DataContextChangedEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet)

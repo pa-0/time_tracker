@@ -40,7 +40,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
             IProject project = _projectFunc.Invoke();
             if (dataSet != null && project != null)
             {
-                IProjectTime activeTimeRow = dataSet.PunchedInTime();
+                IProjectTime activeTimeRow = dataSet.FirstOpenTime();
                 if (activeTimeRow != null)
                 {
                     // No open time, so do a punch in

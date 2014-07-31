@@ -15,7 +15,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// </summary>
         /// <param name="dataSet">The data set to query.</param>
         /// <returns>The time item, or null if not punched in.</returns>
-        public static IProjectTime PunchedInTime(this IProjectTimesData dataSet)
+        public static IProjectTime FirstOpenTime(this IProjectTimesData dataSet)
         {
             return dataSet.Times.FirstOrDefault(timeRow => timeRow.End == null);
         }
@@ -26,7 +26,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <param name="dataSet">The data set to query.</param>
         /// <param name="project">The project in the data set to query.</param>
         /// <returns>The time item, or null if not punched in.</returns>
-        public static IProjectTime PunchedInTime(this IProjectTimesData dataSet, IProject project)
+        public static IProjectTime FirstOpenTime(this IProjectTimesData dataSet, IProject project)
         {
             return dataSet.Times.FirstOrDefault(timeRow => timeRow.End == null && timeRow.Project == project);
         }

@@ -44,7 +44,7 @@ namespace Ficksworkshop.TimeTracker
 
         private void UpdateStatus(IProject project)
         {
-            IProjectTime time = (project != null) ? _dataSet.PunchedInTime(project) : null;
+            IProjectTime time = (project != null) ? _dataSet.FirstOpenTime(project) : null;
             if (project == null || time == null)
             {
                 _status.Content = "<None>";
@@ -61,7 +61,7 @@ namespace Ficksworkshop.TimeTracker
             IProject selectedProject = (IProject)_projectsList.SelectedItem;
             if (selectedProject != null)
             {
-                IProjectTime time = _dataSet.PunchedInTime(selectedProject);
+                IProjectTime time = _dataSet.FirstOpenTime(selectedProject);
                 if (time == null)
                 {
                     // Start a new time

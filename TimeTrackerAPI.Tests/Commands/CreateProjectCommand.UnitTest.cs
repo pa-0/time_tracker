@@ -11,7 +11,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Commands
         [Description("If there is no data set to operate on, then the command should be disabled.")]
         public void CreateProjetCommand_CanExecute_NoDataSet_ReturnsFalse()
         {
-            var command = new CreateProjectCommand(() => null);
+            var command = new CreateProjectCommand(() => null, null, null);
             Assert.IsFalse(command.CanExecute(null));
         }
 
@@ -20,7 +20,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Commands
         public void CreateProjetCommand_CanExecute_NoDataSet_ReturnsTrue()
         {
             var dataSet = new MemoryProjectTimesData();
-            var command = new CreateProjectCommand(() => dataSet);
+            var command = new CreateProjectCommand(() => dataSet, null, null);
             Assert.IsTrue(command.CanExecute(null));
         }
     }

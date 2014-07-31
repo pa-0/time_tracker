@@ -12,6 +12,10 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
 
         private readonly Func<IProjectTimesData> _commandContextFunc;
 
+        private readonly Func<string> _newUniqueIdFunc;
+
+        private readonly Func<string> _newNameFunc;
+
         #endregion
 
         #region Constructors
@@ -21,9 +25,13 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
         /// </summary>
         /// <param name="commandContext">A function that returns an <see cref="IProjectTimesData"/>
         /// that should be used to execute command. This function may return null.</param>
-        public CreateProjectCommand(Func<IProjectTimesData> commandContext)
+        /// <param name="newUniqueId">A function that returns the unique ID to assign the project. May be null.</param>
+        /// /// <param name="newName">A function that returns the name to assign the project. May be null.</param>
+        public CreateProjectCommand(Func<IProjectTimesData> commandContext, Func<string> newUniqueId, Func<string> newName)
         {
             _commandContextFunc = commandContext;
+            _newUniqueIdFunc = newUniqueId;
+            _newNameFunc = newName;
         }
 
         #endregion
@@ -34,7 +42,9 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
             IProjectTimesData dataSet = _commandContextFunc.Invoke();
             if (dataSet != null)
             {
-                dataSet.CreateProject("", "");
+                string newUniqueId = (_newUniqueIdFunc != null) ? _newUniqueIdFunc.Invoke() : "";
+                string newName = (_newNameFunc != null) ? _newNameFunc.Invoke() : "";
+                dataSet.CreateProject(newUniqueId, newName);
             }
         }
 

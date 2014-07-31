@@ -19,10 +19,5 @@ namespace Ficksworkshop.TimeTracker
             _vm = new TimeTrackerViewModel(_dataSet);
             this.DataContext = _vm;
         }
-
-        private void AddClicked(object sender, RoutedEventArgs e)
-        {
-            _vm.AddClicked();
-        }
     }
 }

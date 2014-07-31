@@ -13,6 +13,7 @@ namespace Ficksworkshop.TimeTracker
         private readonly IProjectTimesData _dataSet;
 
         public ObservableCollection<IProject> Projects { get; private set; }
+        
 
         public string NewProjectName { get; set; }
 
@@ -54,6 +55,8 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
+        public ICommand CreateProjectCommand { get; private set; }
+
         public ICommand PunchInOutCommand { get; private set; }
 
         public TimeTrackerViewModel(IProjectTimesData dataSet)
@@ -64,13 +67,8 @@ namespace Ficksworkshop.TimeTracker
 
             Projects = new ObservableCollection<IProject>();
 
+            CreateProjectCommand = new CreateProjectCommand(() => _dataSet, null, () => NewProjectName);
             PunchInOutCommand = new PunchInOutCommand(() => _dataSet, () => SelectedProject);
-        }
-
-        public void AddClicked()
-        {
-            string newName = NewProjectName;
-            _dataSet.CreateProject("", newName);
         }
 
         private void DataSetOnProjectsChanged(object sender, object e)

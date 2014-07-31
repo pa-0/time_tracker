@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,26 +11,58 @@ namespace Ficksworkshop.TimeTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        #region Fields
+
         private readonly IProjectTimesData _dataSet = TrackerInstance.DataSet;
 
-        private readonly TimeTrackerViewModel _vm;
+        private readonly ObservableCollection<IProject> _projects = new ObservableCollection<IProject>();
+
+        #endregion
 
         public MainWindow()
         {
             InitializeComponent();
 
-            _vm = new TimeTrackerViewModel(_dataSet);
-            this.DataContext = _vm;
+            _dataSet.ProjectsChanged += DataSetOnProjectsChanged;
+            this.DataContext = _projects;
+        }
+
+        private void DataSetOnProjectsChanged(object sender, object o)
+        {
+            _projects.Clear();
+            foreach (IProject project in _dataSet.Projects)
+            {
+                _projects.Add(project);
+            }
         }
 
         private void AddClicked(object sender, RoutedEventArgs e)
         {
-            _vm.AddClicked();
+             _dataSet.CreateProject("", _newProjectName.Text);
+        }
+
+        private void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DataGridCellInfo addedCell = e.AddedCells.FirstOrDefault();
+            IProject project = (addedCell != default(DataGridCellInfo)) ? (IProject)addedCell.Item : null;
+
+            if (project != null)
+            {
+                _selectedProject.Content = project.Name;
+                _punchInOut.IsEnabled = true;
+            }
+            else
+            {
+                _selectedProject.Content = "<None>";
+                _punchInOut.IsEnabled = false;
+            }
         }
 
         private void PunchInOutClicked(object sender, RoutedEventArgs e)
         {
-            _vm.PunchInOutClicked();
+
         }
+
+
     }
 }

@@ -41,7 +41,7 @@ namespace Ficksworkshop.TimeTracker
              _dataSet.CreateProject("", _newProjectName.Text);
         }
 
-        private void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             DataGridCellInfo addedCell = e.AddedCells.FirstOrDefault();
             IProject project = (addedCell != default(DataGridCellInfo)) ? (IProject)addedCell.Item : null;

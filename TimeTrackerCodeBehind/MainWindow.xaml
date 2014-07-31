@@ -12,8 +12,8 @@
                 <!-- Click="AddClicked"-->
                 <Button Content="Add" Margin="3,0,3,3" Width="75" HorizontalAlignment="Left"/>
             </StackPanel>
-            <!-- x:Name="_projectsList" -->
-            <ListBox Margin="3,0,0,3" MinHeight="150"/>
+            <!-- x:Name="_projectsList" SelectionChanged="SelectionChanged" -->
+            <ListBox Margin="3,0,0,3" MinHeight="150" SelectionMode="Single"/>
         </DockPanel>
         <Label Content="Selected Project"/>
         <Grid Margin="15,0,0,0">
@@ -30,7 +30,7 @@
             <Label Content="Status:" Grid.Row="1" Grid.Column="0"/>
             <Label x:Name="_status" Content="&lt;None&gt;" Grid.Row="1" Grid.Column="1"/>
         </Grid>
-        <!-- Click="PunchInOutClicked"-->
-        <Button x:Name="_punchInOut" Margin="20,0,0,0" Content="Punch In/Out" Width="75" HorizontalAlignment="Left"/>
+        <!-- x:Name="_punchInOut" Click="PunchInOutClicked"-->
+        <Button Margin="20,0,0,0" Content="Punch In/Out" Width="75" HorizontalAlignment="Left"/>
     </StackPanel>
 </Window>

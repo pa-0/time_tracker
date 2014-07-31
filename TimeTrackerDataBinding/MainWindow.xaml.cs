@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Ficksworkshop.TimeTrackerAPI;
 
 namespace Ficksworkshop.TimeTracker
 {
@@ -20,9 +10,71 @@ namespace Ficksworkshop.TimeTracker
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly IProjectTimesData _dataSet = TrackerInstance.DataSet;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            _dataSet.ProjectsChanged += DataSetOnProjectsChanged;
+        }
+
+        private void AddClicked(object sender, RoutedEventArgs e)
+        {
+            string newName = _newProjectName.Text;
+            _dataSet.CreateProject("", newName);
+        }
+
+        private void DataSetOnProjectsChanged(object sender, object e)
+        {
+            _projectsList.Items.Clear();
+            foreach (IProject project in _dataSet.Projects)
+            {
+                _projectsList.Items.Add(project);
+            }
+        }
+
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            IProject project = (e.AddedItems.Count > 0) ? (IProject)e.AddedItems[0] : null;
+            _selectedProject.Content = (project != null) ? project.Name : "<None>";
+
+            UpdateStatus(project);
+        }
+
+        private void UpdateStatus(IProject project)
+        {
+            IProjectTime time = (project != null) ? _dataSet.PunchedInTime(project) : null;
+            if (project == null || time == null)
+            {
+                _status.Content = "<None>";
+            }
+            else
+            {
+                _status.Content = time.Start;
+            }
+        }
+
+        private void PunchInOutClicked(object sender, RoutedEventArgs e)
+        {
+            // Get the selected project
+            IProject selectedProject = (IProject)_projectsList.SelectedItem;
+            if (selectedProject != null)
+            {
+                IProjectTime time = _dataSet.PunchedInTime(selectedProject);
+                if (time == null)
+                {
+                    // Start a new time
+                    _dataSet.CreateTime(selectedProject, DateTime.Now, null);
+                }
+                else
+                {
+                    // End the current time
+                    time.End = DateTime.Now;
+                }
+
+                UpdateStatus(selectedProject);
+            }
         }
     }
 }

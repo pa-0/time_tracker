@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,13 +12,11 @@ namespace Ficksworkshop.TimeTracker
     /// </summary>
     public partial class MainWindow : Window
     {
-        #region Fields
-
         private readonly IProjectTimesData _dataSet = TrackerInstance.DataSet;
 
         private readonly ObservableCollection<IProject> _projects = new ObservableCollection<IProject>();
 
-        #endregion
+        private IProject _selectedProjectItem = null;
 
         public MainWindow()
         {
@@ -27,7 +26,13 @@ namespace Ficksworkshop.TimeTracker
             this.DataContext = _projects;
         }
 
-        private void DataSetOnProjectsChanged(object sender, object o)
+        private void AddClicked(object sender, RoutedEventArgs e)
+        {
+            string newName = _newProjectName.Text;
+            _dataSet.CreateProject("", newName);
+        }
+
+        private void DataSetOnProjectsChanged(object sender, object e)
         {
             _projects.Clear();
             foreach (IProject project in _dataSet.Projects)
@@ -36,33 +41,46 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        private void AddClicked(object sender, RoutedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-             _dataSet.CreateProject("", _newProjectName.Text);
+            _selectedProjectItem = (e.AddedItems.Count > 0) ? (IProject)e.AddedItems[0] : null;
+            _selectedProject.Content = (_selectedProjectItem != null) ? _selectedProjectItem.Name : "<None>";
+
+            UpdateStatus(_selectedProjectItem);
         }
 
-        private void SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void UpdateStatus(IProject project)
         {
-            DataGridCellInfo addedCell = e.AddedCells.FirstOrDefault();
-            IProject project = (addedCell != default(DataGridCellInfo)) ? (IProject)addedCell.Item : null;
-
-            if (project != null)
+            IProjectTime time = (project != null) ? _dataSet.FirstOpenTime(project) : null;
+            if (project == null || time == null)
             {
-                _selectedProject.Content = project.Name;
-                _punchInOut.IsEnabled = true;
+                _status.Content = "<None>";
             }
             else
             {
-                _selectedProject.Content = "<None>";
-                _punchInOut.IsEnabled = false;
+                _status.Content = time.Start;
             }
         }
 
         private void PunchInOutClicked(object sender, RoutedEventArgs e)
         {
+            // Get the selected project
+            if (_selectedProjectItem != null)
+            {
+                IProjectTime time = _dataSet.FirstOpenTime(_selectedProjectItem);
+                if (time == null)
+                {
+                    // Start a new time
+                    _dataSet.CreateTime(_selectedProjectItem, DateTime.Now, null);
+                }
+                else
+                {
+                    // End the current time
+                    time.End = DateTime.Now;
+                }
 
+                UpdateStatus(_selectedProjectItem);
+            }
         }
-
-
     }
 }

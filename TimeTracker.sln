@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackerCodeBehind", "Ti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackerWPF", "TimeTrackerWPF\TimeTrackerWPF.csproj", "{FCF7AC47-4B11-4B9F-AD11-6ED4AEB9EDD8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimeTrackerDataBinding", "TimeTrackerDataBinding\TimeTrackerDataBinding.csproj", "{8D6FF263-FFB3-4B3E-B72C-CABF5669354F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{FCF7AC47-4B11-4B9F-AD11-6ED4AEB9EDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCF7AC47-4B11-4B9F-AD11-6ED4AEB9EDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCF7AC47-4B11-4B9F-AD11-6ED4AEB9EDD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D6FF263-FFB3-4B3E-B72C-CABF5669354F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D6FF263-FFB3-4B3E-B72C-CABF5669354F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D6FF263-FFB3-4B3E-B72C-CABF5669354F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D6FF263-FFB3-4B3E-B72C-CABF5669354F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

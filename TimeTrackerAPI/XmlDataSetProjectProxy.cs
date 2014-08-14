@@ -73,6 +73,11 @@ namespace Ficksworkshop.TimeTrackerAPI
         }
 
         #endregion
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 
     /// <summary>

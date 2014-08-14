@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,6 +17,8 @@ namespace Ficksworkshop.TimeTracker
         private readonly IProjectTimesData _dataSet = TrackerInstance.DataSet;
 
         private readonly ObservableCollection<IProject> _projects = new ObservableCollection<IProject>();
+
+        private IProject _selectedProjectItem = null;
 
         #endregion
 
@@ -41,28 +44,47 @@ namespace Ficksworkshop.TimeTracker
              _dataSet.CreateProject("", _newProjectName.Text);
         }
 
-        private void SelectionChanged(object sender, SelectedCellsChangedEventArgs e)
+        private void SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            DataGridCellInfo addedCell = e.AddedCells.FirstOrDefault();
-            IProject project = (addedCell != default(DataGridCellInfo)) ? (IProject)addedCell.Item : null;
+            _selectedProjectItem = (e.AddedItems.Count > 0) ? (IProject)e.AddedItems[0] : null;
+            _selectedProject.Content = (_selectedProjectItem != null) ? _selectedProjectItem.Name : "<None>";
 
-            if (project != null)
+            UpdateStatus(_selectedProjectItem);
+        }
+
+        private void UpdateStatus(IProject project)
+        {
+            IProjectTime time = (project != null) ? _dataSet.FirstOpenTime(project) : null;
+            if (project == null || time == null)
             {
-                _selectedProject.Content = project.Name;
-                _punchInOut.IsEnabled = true;
+                _status.Content = "<None>";
             }
             else
             {
-                _selectedProject.Content = "<None>";
-                _punchInOut.IsEnabled = false;
+                _status.Content = time.Start;
             }
         }
 
         private void PunchInOutClicked(object sender, RoutedEventArgs e)
         {
+            // Get the selected project
+            IProject selectedProject = _selectedProjectItem;
+            if (selectedProject != null)
+            {
+                IProjectTime time = _dataSet.FirstOpenTime(selectedProject);
+                if (time == null)
+                {
+                    // Start a new time
+                    _dataSet.CreateTime(selectedProject, DateTime.Now, null);
+                }
+                else
+                {
+                    // End the current time
+                    time.End = DateTime.Now;
+                }
 
+                UpdateStatus(selectedProject);
+            }
         }
-
-
     }
 }

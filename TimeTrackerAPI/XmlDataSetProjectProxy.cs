@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 
 namespace Ficksworkshop.TimeTrackerAPI
 {
@@ -23,10 +18,12 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlDataSetProjectProxy"/> class.
         /// </summary>
+        /// <param name="owner"></param>
         /// <param name="project"></param>
-        public XmlDataSetProjectProxy(TimesDataSet.ProjectsRow project)
+        public XmlDataSetProjectProxy(XmlDataSetProjectTimesData owner, TimesDataSet.ProjectsRow project)
         {
             ProjectsRow = project;
+            _owner = owner;
         }
 
         #endregion
@@ -72,6 +69,13 @@ namespace Ficksworkshop.TimeTrackerAPI
             }
         }
 
+        private readonly XmlDataSetProjectTimesData _owner;
+
+        public IProjectTimesData Owner
+        {
+            get { return _owner; }
+        }
+
         #endregion
 
         public override string ToString()
@@ -85,19 +89,27 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// </summary>
     internal class XmlDataSetProjectProxyFactory : XmlDataSetProxyFactory<TimesDataSet.ProjectsRow, XmlDataSetProjectProxy>
     {
+        #region Fields
+
+        private readonly XmlDataSetProjectTimesData _dataSet;
+
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlDataSetProjectProxyFactory"/> class.
         /// </summary>
+        /// <param name="dataSet">The owner of the project items.</param>
         /// <param name="table">The table that contains the rows.</param>
-        internal XmlDataSetProjectProxyFactory(TypedTableBase<TimesDataSet.ProjectsRow> table)
+        internal XmlDataSetProjectProxyFactory(XmlDataSetProjectTimesData dataSet, TypedTableBase<TimesDataSet.ProjectsRow> table)
             : base(table)
         {
+            _dataSet = dataSet;
         }
 
         /// <inheritdoc/>
         protected override XmlDataSetProjectProxy CreateInstance(TimesDataSet.ProjectsRow row)
         {
-            return new XmlDataSetProjectProxy(row);
+            return new XmlDataSetProjectProxy(_dataSet, row);
         }
     }
 }

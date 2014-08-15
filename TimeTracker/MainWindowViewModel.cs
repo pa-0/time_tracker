@@ -73,7 +73,7 @@ namespace Ficksworkshop.TimeTracker
 
             // Commands
             DeleteProjectCommand = new DeleteProjectCommand(() => dataSet, () => _selectedProject);
-            PunchInOutCommand = new PunchInOutCommand(() => dataSet, () => _selectedProject);
+            PunchInOutCommand = new PunchInOutCommand();
         }
 
         #endregion

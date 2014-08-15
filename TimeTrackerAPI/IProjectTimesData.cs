@@ -98,6 +98,8 @@ namespace Ficksworkshop.TimeTrackerAPI
         string UniqueId { get; set; }
 
         ProjectStatus Status { get; set; }
+
+        IProjectTimesData Owner { get; }
     }
 
     public interface IProjectTime

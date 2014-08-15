@@ -49,7 +49,9 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        public ICommand TogglePunchStateCommand;
+        public IProject SelectedProject { get; private set; }
+
+        public ICommand TogglePunchStateCommand { get; private set; }
 
         #endregion
 
@@ -66,7 +68,7 @@ namespace Ficksworkshop.TimeTracker
                 TrackerInstance.DataSet.ProjectTimeChanged += ProjectTimeChangedEventHandler;
             }
 
-            TogglePunchStateCommand = new PunchInOutCommand(() => TrackerInstance.DataSet, () => null);
+            TogglePunchStateCommand = new PunchInOutCommand();
         }
 
         #endregion

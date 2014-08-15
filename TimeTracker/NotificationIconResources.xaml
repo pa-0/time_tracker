@@ -12,7 +12,7 @@
             </MenuItem.ItemContainerStyle>
         </MenuItem>
         <MenuItem Header="Open Window" Command="{x:Static local:Commands.ShowWindowCommand}"/>
-        <MenuItem Command="{Binding TogglePunchStateCommand}">
+        <MenuItem Command="{Binding TogglePunchStateCommand}" CommandParameter="{Binding SelectedProject}">
                <MenuItem.Style>
                    <Style TargetType="MenuItem">
                        <Style.Triggers>

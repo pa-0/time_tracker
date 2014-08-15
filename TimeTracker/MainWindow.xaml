@@ -4,20 +4,19 @@
         xmlns:local="clr-namespace:Ficksworkshop.TimeTracker"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-
         <TabControl HorizontalAlignment="Left" Height="299" Margin="7,10,0,0" VerticalAlignment="Top" Width="500">
             <TabItem Header="Projects">
                 <StackPanel>
-                    <DataGrid ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" AutoGenerateColumns="False" IsReadOnly="True" VerticalAlignment="Top" Height="219" Width="476">
+                    <DataGrid ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" AutoGenerateColumns="False" IsReadOnly="False" VerticalAlignment="Top" Height="219" Width="476">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=UniqueId, Mode=OneWay}" Header="Id"/>
-                            <DataGridTextColumn Binding="{Binding Path=Name, Mode=OneWay}" Header="Name"/>
+                            <DataGridTextColumn Binding="{Binding Path=UniqueId, Mode=TwoWay}" Header="Id"/>
+                            <DataGridTextColumn Binding="{Binding Path=Name, Mode=TwoWay}" Header="Name"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal">
                         <Button Content="New Project" Height="22" Width="75" Command="{x:Static local:Commands.CreateNewProjectCommand}"/>
                         <Button Content="Delete Project" Height="22" Width="75" Command="{Binding DeleteProjectCommand}"/>
-                        <Button Content="Punch In/Out" Height="22" Width="75" Command="{Binding PunchInOutCommand}"/>
+                        <Button Content="Punch In/Out" Height="22" Width="75" Command="{Binding PunchInOutCommand}" CommandParameter="{Binding SelectedProject}"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>

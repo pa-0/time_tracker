@@ -74,6 +74,8 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
             public ProjectStatus Status { get; set; }
 
             public string UniqueId { get; set; }
+
+            public IProjectTimesData Owner { get; private set; }
         }
 
         internal class MemoryTime : IProjectTime

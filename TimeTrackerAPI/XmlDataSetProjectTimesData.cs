@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 
 namespace Ficksworkshop.TimeTrackerAPI
 {
@@ -37,7 +36,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             LoadDatabase(inputStream);
 
-            _projectProxyFactory = new XmlDataSetProjectProxyFactory(DataSet.Projects);
+            _projectProxyFactory = new XmlDataSetProjectProxyFactory(this, DataSet.Projects);
 
             _timeProxyFactory = new XmlDataSetProjectTimeProxyFactory(this, DataSet.Times);
         }

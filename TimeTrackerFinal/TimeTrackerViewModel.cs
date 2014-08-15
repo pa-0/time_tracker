@@ -7,7 +7,13 @@ namespace Ficksworkshop.TimeTracker
 {
     public class TimeTrackerViewModel : ViewModelBase
     {
+        #region Fields
+
         private readonly IProjectTimesData _dataSet;
+
+        #endregion
+
+        #region Properties
 
         /// <summary>
         /// All known projects that we are going to show.
@@ -19,7 +25,6 @@ namespace Ficksworkshop.TimeTracker
         /// to implement NotifyPropertyChanged here because it is only set by the view.
         /// </summary>
         public string NewProjectName { get; set; }
-
         
         private IProject _selectedProject;
 
@@ -72,10 +77,9 @@ namespace Ficksworkshop.TimeTracker
         /// </summary>
         public ICommand CreateProjectCommand { get; private set; }
 
-        /// <summary>
-        /// Bindable command to punch in/out of the selected project.
-        /// </summary>
-        public ICommand PunchInOutCommand { get; private set; }
+        #endregion
+
+        #region Constructors
 
         /// <summary>
         /// Initalizes a new instance of the <see cref="TimeTrackerViewModel"/> class.
@@ -90,8 +94,9 @@ namespace Ficksworkshop.TimeTracker
             Projects = new ObservableCollection<IProject>();
 
             CreateProjectCommand = new CreateProjectCommand(null, () => NewProjectName);
-            PunchInOutCommand = new PunchInOutCommand();
         }
+
+        #endregion
 
         /// <summary>
         /// Listens to the ProjectsChanged event from the model so we can notify the view.

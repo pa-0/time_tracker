@@ -44,12 +44,6 @@ namespace Ficksworkshop.TimeTracker
         /// </summary>
         public ObservableCollection<ITrackerSetting> Settings { get; private set; }
 
-        
-
-        public ICommand DeleteProjectCommand { get; private set; }
-
-        public ICommand PunchInOutCommand { get; private set; }
-
         #endregion
 
         #region Constructors
@@ -72,10 +66,6 @@ namespace Ficksworkshop.TimeTracker
 
             // Settings
             Settings = settings.Items;
-
-            // Commands
-            DeleteProjectCommand = new DeleteProjectCommand();
-            PunchInOutCommand = new PunchInOutCommand();
         }
 
         #endregion

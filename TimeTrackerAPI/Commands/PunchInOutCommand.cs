@@ -14,7 +14,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
         /// <inheritdoc />
         public void Execute(object parameter)
         {
-            IProject project = parameter as IProject;
+            var project = parameter as IProject;
             if (project != null)
             {
                 IProjectTime activeTimeRow = project.Owner.FirstOpenTime();
@@ -35,7 +35,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
         /// <remarks>We can execute if there is a context, a project, and the project isn't closed.</remarks>
         public bool CanExecute(object parameter)
         {
-            IProject project = parameter as IProject;
+            var project = parameter as IProject;
             return project != null && project.Status != ProjectStatus.Closed;
         }
 

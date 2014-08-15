@@ -1,4 +1,6 @@
-﻿namespace Ficksworkshop.TimeTrackerAPI
+﻿using System.IO;
+
+namespace Ficksworkshop.TimeTrackerAPI
 {
     public delegate void DataSetEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet);
 
@@ -15,7 +17,7 @@
     {
         #region Properties
 
-        private static IProjectTimesData dataSet;
+        private static IProjectTimesData _dataSet;
 
         /// <summary>
         /// Gets the singleton data set instance that we are currently using in the application.
@@ -24,20 +26,32 @@
         {
             get
             {
-                if (dataSet == null)
+                if (_dataSet == null)
                 {
-                    dataSet = new XmlDataSetProjectTimesData(null);
+                    _dataSet = new XmlDataSetProjectTimesData(null);
 
                     if (DataSetChangedEvent != null)
                     {
-                        DataSetChangedEvent.Invoke(null, dataSet);
+                        DataSetChangedEvent.Invoke(null, _dataSet);
                     }
                 }
-                return dataSet;
+                return _dataSet;
+            }
+            private set
+            {
+                if (_dataSet != value)
+                {
+                    _dataSet = value;
+
+                    if (DataSetChangedEvent != null)
+                    {
+                        DataSetChangedEvent.Invoke(null, _dataSet);
+                    }
+                }
             }
         }
 
-        private static TrackerSettings settings;
+        private static TrackerSettings _settings;
 
         /// <summary>
         /// Gets the singleton settings instance that we are currently using in the application.
@@ -46,11 +60,11 @@
         {
             get
             {
-                if (settings == null)
+                if (_settings == null)
                 {
-                    settings = new TrackerSettings();
+                    _settings = new TrackerSettings();
                 }
-                return settings;
+                return _settings;
             }
         }
 
@@ -58,6 +72,25 @@
         /// Event fires whenever the data set instance changes.
         /// </summary>
         public static event DataSetEventHandler DataSetChangedEvent;
+
+        #endregion
+
+        #region Public Members
+
+        public static IProjectTimesData OpenDataSet(string fileName)
+        {
+            Stream openStream = null;
+            if (File.Exists(fileName))
+            {
+                openStream = new FileStream(fileName, FileMode.OpenOrCreate);
+            }
+            
+            var newDataSet = new XmlDataSetProjectTimesData(openStream);
+
+            DataSet = newDataSet;
+
+            return newDataSet;
+        }
 
         #endregion
     }

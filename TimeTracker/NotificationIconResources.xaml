@@ -29,6 +29,8 @@
         </MenuItem>
         <Separator/>
         <MenuItem Header="Recent Times" Command="{x:Static commands:Commands.ViewDayDetailsCommand}"/>
+        <Separator/>
+        <MenuItem Header="Load DataSet" Command="{x:Static commands:Commands.LoadDataSetCommand}" />
         <MenuItem Header="Exit" Command="{x:Static commands:Commands.ExitApplicationCommand}" />
     </ContextMenu>
     

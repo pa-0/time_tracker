@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
@@ -12,12 +13,22 @@ namespace Ficksworkshop.TimeTracker.Commands
     /// </summary>
     public static class Commands
     {
+        // TODO hack hack hack
+        private static string filePath = @"D:\timetracker.ttd";
+
         /// <summary>
         /// Command to shutdown the application.
         /// </summary>
         public static readonly ICommand ExitApplicationCommand = new DelegateCommand
             {
-                CommandAction = () => Application.Current.Shutdown()
+                CommandAction = () =>
+                {
+                    // TODO hack hack to get things working
+                    XmlDataSetProjectTimesData xmlDataSet = (XmlDataSetProjectTimesData) TrackerInstance.DataSet;
+                    TextWriter writer = new StreamWriter(new FileStream(filePath, FileMode.OpenOrCreate));
+                    xmlDataSet.WriteDatabase(writer);
+                    Application.Current.Shutdown();
+                }
             };
 
         /// <summary>
@@ -63,6 +74,15 @@ namespace Ficksworkshop.TimeTracker.Commands
                 }
             };
 
+        public static readonly ICommand LoadDataSetCommand = new DelegateCommand
+        {
+            CommandAction = () =>
+            {
+                TrackerInstance.OpenDataSet(filePath);
+            }
+        };
+
+        // TODO hack hack hack
         public static readonly ICommand CreateNewProjectCommand = new CreateProjectCommand(null, null);
 
         public static readonly ICommand DeleteProjectCommand = new DeleteProjectCommand();

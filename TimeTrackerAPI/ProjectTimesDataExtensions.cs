@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Ficksworkshop.TimeTrackerAPI
@@ -29,6 +30,21 @@ namespace Ficksworkshop.TimeTrackerAPI
         public static IProjectTime FirstOpenTime(this IProjectTimesData dataSet, IProject project)
         {
             return dataSet.Times.FirstOrDefault(timeRow => timeRow.End == null && timeRow.Project == project);
+        }
+
+        /// <summary>
+        /// Gets projects that have times in the specified range.
+        /// </summary>
+        /// <param name="dataSet"></param>
+        /// <param name="start"></param>
+        /// <param name="end"></param>
+        /// <returns></returns>
+        public static IEnumerable<IProjectTime> ProjectsTimes(this IProjectTimesData dataSet, DateTime start, DateTime end)
+        {
+            foreach (var time in dataSet.Times.Where(pt => pt.Start > start && pt.End.HasValue && pt.End < end))
+            {
+                yield return time;
+            }
         }
     }
 }

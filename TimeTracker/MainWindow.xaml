@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Ficksworkshop.TimeTracker"
         xmlns:ttapi="clr-namespace:Ficksworkshop.TimeTrackerAPI.View;assembly=TimeTrackerAPI"
+        xmlns:commands="clr-namespace:Ficksworkshop.TimeTracker.Commands"
         Title="MainWindow" Height="350" Width="525">
     <Window.Resources>
         <ttapi:ProjectStatusConverter x:Key="ProjectStatusConverter" />
@@ -20,9 +21,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="New Project" Height="22" Width="75" Command="{x:Static local:Commands.CreateNewProjectCommand}" CommandParameter="{Binding DataSet}"/>
-                        <Button Content="Delete Project" Height="22" Width="75" Command="{x:Static local:Commands.DeleteProjectCommand}" CommandParameter="{Binding SelectedProject}"/>
-                        <Button Content="Punch In/Out" Height="22" Width="75" Command="{x:Static local:Commands.PunchInOutCommand}" CommandParameter="{Binding SelectedProject}"/>
+                        <Button Content="New Project" Height="22" Width="75" Command="{x:Static commands:Commands.CreateNewProjectCommand}" CommandParameter="{Binding DataSet}"/>
+                        <Button Content="Delete Project" Height="22" Width="75" Command="{x:Static commands:Commands.DeleteProjectCommand}" CommandParameter="{Binding SelectedProject}"/>
+                        <Button Content="Punch In/Out" Height="22" Width="75" Command="{x:Static commands:Commands.PunchInOutCommand}" CommandParameter="{Binding SelectedProject}"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>

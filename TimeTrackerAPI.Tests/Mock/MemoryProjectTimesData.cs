@@ -18,7 +18,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
         /// <inheritdoc />
         public IProject CreateProject(string uniqueId, string name)
         {
-            return new MemoryProject();
+            return new MemoryProject(this);
         }
 
         /// <inheritdoc />
@@ -69,6 +69,11 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
 
         internal class MemoryProject : IProject
         {
+            public MemoryProject(MemoryProjectTimesData dataSet)
+            {
+                Owner = dataSet;
+            }
+
             public string Name { get; set; }
 
             public ProjectStatus Status { get; set; }

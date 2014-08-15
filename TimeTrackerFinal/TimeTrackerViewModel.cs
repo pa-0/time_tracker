@@ -89,7 +89,7 @@ namespace Ficksworkshop.TimeTracker
 
             Projects = new ObservableCollection<IProject>();
 
-            CreateProjectCommand = new CreateProjectCommand(() => _dataSet, null, () => NewProjectName);
+            CreateProjectCommand = new CreateProjectCommand(null, () => NewProjectName);
             PunchInOutCommand = new PunchInOutCommand();
         }
 

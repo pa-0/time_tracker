@@ -14,9 +14,9 @@
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal">
-                        <Button Content="New Project" Height="22" Width="75" Command="{x:Static local:Commands.CreateNewProjectCommand}"/>
-                        <Button Content="Delete Project" Height="22" Width="75" Command="{Binding DeleteProjectCommand}"/>
-                        <Button Content="Punch In/Out" Height="22" Width="75" Command="{Binding PunchInOutCommand}" CommandParameter="{Binding SelectedProject}"/>
+                        <Button Content="New Project" Height="22" Width="75" Command="{x:Static local:Commands.CreateNewProjectCommand}" CommandParameter="{Binding DataSet}"/>
+                        <Button Content="Delete Project" Height="22" Width="75" Command="{x:Static local:Commands.DeleteProjectCommand}" CommandParameter="{Binding SelectedProject}"/>
+                        <Button Content="Punch In/Out" Height="22" Width="75" Command="{x:Static local:Commands.PunchInOutCommand}" CommandParameter="{Binding SelectedProject}"/>
                     </StackPanel>
                 </StackPanel>
             </TabItem>

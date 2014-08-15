@@ -34,7 +34,11 @@ namespace Ficksworkshop.TimeTracker
                     }
             };
 
-        public static readonly ICommand CreateNewProjectCommand = new CreateProjectCommand(() => TrackerInstance.DataSet, null, null);
+        public static readonly ICommand CreateNewProjectCommand = new CreateProjectCommand(null, null);
+
+        public static readonly ICommand DeleteProjectCommand = new DeleteProjectCommand();
+
+        public static readonly ICommand PunchInOutCommand = new PunchInOutCommand();
     }
 
     /// <summary>

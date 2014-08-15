@@ -5,12 +5,12 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
 {
     /// <summary>
     /// A standard command that can creates a new project.
+    /// 
+    /// This command required bound command pameter that specified the <see cref="IProjectTimesData"/> to add to.
     /// </summary>
     public class CreateProjectCommand : ICommand
     {
         #region Fields
-
-        private readonly Func<IProjectTimesData> _commandContextFunc;
 
         private readonly Func<string> _newUniqueIdFunc;
 
@@ -23,13 +23,11 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
         /// <summary>
         /// Initializes a new instance of the <see cref="DeleteProjectCommand"/> class.
         /// </summary>
-        /// <param name="commandContext">A function that returns an <see cref="IProjectTimesData"/>
         /// that should be used to execute command. This function may return null.</param>
         /// <param name="newUniqueId">A function that returns the unique ID to assign the project. May be null.</param>
-        /// /// <param name="newName">A function that returns the name to assign the project. May be null.</param>
-        public CreateProjectCommand(Func<IProjectTimesData> commandContext, Func<string> newUniqueId, Func<string> newName)
+        /// <param name="newName">A function that returns the name to assign the project. May be null.</param>
+        public CreateProjectCommand(Func<string> newUniqueId, Func<string> newName)
         {
-            _commandContextFunc = commandContext;
             _newUniqueIdFunc = newUniqueId;
             _newNameFunc = newName;
         }
@@ -39,7 +37,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
         /// <inheritdoc />
         public void Execute(object parameter)
         {
-            IProjectTimesData dataSet = _commandContextFunc.Invoke();
+            var dataSet = parameter as IProjectTimesData;
             if (dataSet != null)
             {
                 string newUniqueId = (_newUniqueIdFunc != null) ? _newUniqueIdFunc.Invoke() : "";
@@ -52,7 +50,8 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
         /// <remarks>We can execute if there is a context and a project.</remarks>
         public bool CanExecute(object parameter)
         {
-            return _commandContextFunc.Invoke() != null;
+            var dataSet = parameter as IProjectTimesData;
+            return dataSet != null;
         }
 
         public event EventHandler CanExecuteChanged

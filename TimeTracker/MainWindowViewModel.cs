@@ -8,13 +8,13 @@ namespace Ficksworkshop.TimeTracker
 {
     public class MainWindowViewModel : INotifyPropertyChanged
     {
-        #region Fields
-
-        private IProjectTimesData _dataSet;
-
-        #endregion
-
         #region Properties
+
+        /// <summary>
+        /// The data set. This exists because the add/delete commands need this
+        /// in order to set the command parameter.
+        /// </summary>
+        public IProjectTimesData DataSet { get; private set; }
 
         /// <summary>
         /// The complete list of all projects.
@@ -44,6 +44,8 @@ namespace Ficksworkshop.TimeTracker
         /// </summary>
         public ObservableCollection<ITrackerSetting> Settings { get; private set; }
 
+        
+
         public ICommand DeleteProjectCommand { get; private set; }
 
         public ICommand PunchInOutCommand { get; private set; }
@@ -59,7 +61,7 @@ namespace Ficksworkshop.TimeTracker
         /// <param name="dataSet">The project/times data to display.</param>
         public MainWindowViewModel(TrackerSettings settings, IProjectTimesData dataSet)
         {
-            _dataSet = dataSet;
+            DataSet = dataSet;
             // Create the initial collection that the UI will bind to
             Projects = new ObservableCollection<IProject>();
             RefreshProjects(null, null);
@@ -72,7 +74,7 @@ namespace Ficksworkshop.TimeTracker
             Settings = settings.Items;
 
             // Commands
-            DeleteProjectCommand = new DeleteProjectCommand(() => dataSet, () => _selectedProject);
+            DeleteProjectCommand = new DeleteProjectCommand();
             PunchInOutCommand = new PunchInOutCommand();
         }
 
@@ -83,7 +85,7 @@ namespace Ficksworkshop.TimeTracker
         private void RefreshProjects(object sender, object e)
         {
             Projects.Clear();
-            foreach (IProject project in _dataSet.Projects)
+            foreach (IProject project in DataSet.Projects)
             {
                 Projects.Add(project);
             }

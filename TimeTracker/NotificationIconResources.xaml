@@ -33,7 +33,7 @@
     <tb:TaskbarIcon x:Key="NotificationIcon"
                     IconSource="/Red.ico"
                     ToolTipText="Double-click to punch-in/punch-out"
-                    DoubleClickCommand="{Binding TogglePunchStateCommand}"
+                    DoubleClickCommand="{x:Static local:Commands.PunchInOutCommand}"
                     ContextMenu="{StaticResource SysTrayMenu}">
         <tb:TaskbarIcon.DataContext>
             <local:NotificationIconViewModel/>

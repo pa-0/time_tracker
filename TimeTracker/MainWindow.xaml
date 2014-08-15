@@ -2,7 +2,12 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:local="clr-namespace:Ficksworkshop.TimeTracker"
+        xmlns:ttapi="clr-namespace:Ficksworkshop.TimeTrackerAPI.View;assembly=TimeTrackerAPI"
         Title="MainWindow" Height="350" Width="525">
+    <Window.Resources>
+        <ttapi:ProjectStatusConverter x:Key="ProjectStatusConverter" />
+    </Window.Resources>
+    
     <Grid>
         <TabControl HorizontalAlignment="Left" Height="299" Margin="7,10,0,0" VerticalAlignment="Top" Width="500">
             <TabItem Header="Projects">
@@ -11,6 +16,7 @@
                         <DataGrid.Columns>
                             <DataGridTextColumn Binding="{Binding Path=UniqueId, Mode=TwoWay}" Header="Id"/>
                             <DataGridTextColumn Binding="{Binding Path=Name, Mode=TwoWay}" Header="Name"/>
+                            <DataGridTextColumn Binding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource ProjectStatusConverter}}" Header="Status"/>
                         </DataGrid.Columns>
                     </DataGrid>
                     <StackPanel Orientation="Horizontal">

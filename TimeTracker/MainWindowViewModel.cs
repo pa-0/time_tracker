@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
 using Ficksworkshop.TimeTrackerAPI;
-using Ficksworkshop.TimeTrackerAPI.Commands;
 
 namespace Ficksworkshop.TimeTracker
 {

@@ -1,8 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Input;
 using Ficksworkshop.TimeTrackerAPI;
-using Ficksworkshop.TimeTrackerAPI.Commands;
 
 namespace Ficksworkshop.TimeTracker
 {
@@ -49,9 +47,7 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        public IProject SelectedProject { get; private set; }
-
-        public ICommand TogglePunchStateCommand { get; private set; }
+        public IProject SelectedProject { get; set; }
 
         #endregion
 
@@ -67,8 +63,6 @@ namespace Ficksworkshop.TimeTracker
                 TrackerInstance.DataSet.ProjectsChanged += ProjectsChangedEventHandler;
                 TrackerInstance.DataSet.ProjectTimeChanged += ProjectTimeChangedEventHandler;
             }
-
-            TogglePunchStateCommand = new PunchInOutCommand();
         }
 
         #endregion

@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +54,7 @@
     <Compile Include="ProjectTimeExtensions.cs" />
     <Compile Include="ProjectTimesDataExtensions.cs" />
     <Compile Include="TrackerInstance.cs" />
+    <Compile Include="View\ProjectStatusConverter.cs" />
     <Compile Include="XmlDataSetProjectProxy.cs" />
     <Compile Include="XmlDataSetProjectTimeProxy.cs" />
     <Compile Include="XmlDataSetProjectTimesData.cs" />

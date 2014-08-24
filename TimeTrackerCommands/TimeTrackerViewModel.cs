@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Ficksworkshop.TimeTrackerAPI;
 
 namespace Ficksworkshop.TimeTracker
@@ -8,12 +9,23 @@ namespace Ficksworkshop.TimeTracker
     {
         private readonly IProjectTimesData _dataSet;
 
+        /// <summary>
+        /// Gets the list of projects to display.
+        /// </summary>
         public ObservableCollection<IProject> Projects { get; private set; }
 
+        /// <summary>
+        /// Bindable property for the new project name.
+        /// 
+        /// Since we don't set this in the dialog, I've omitted the notification.
+        /// </summary>
         public string NewProjectName { get; set; }
 
         private IProject _selectedProject;
 
+        /// <summary>
+        /// Gets or sets the currently selected project in the project list.
+        /// </summary>
         public IProject SelectedProject
         {
             get
@@ -34,6 +46,9 @@ namespace Ficksworkshop.TimeTracker
 
         private string _status;
 
+        /// <summary>
+        /// Gets a string that describes the status of the selected project.
+        /// </summary>
         public string Status
         {
             get
@@ -64,6 +79,11 @@ namespace Ficksworkshop.TimeTracker
             _dataSet.CreateProject("", newName);
         }
 
+        /// <summary>
+        /// Event handler for when the the list of projects in the data set changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DataSetOnProjectsChanged(object sender, object e)
         {
             Projects.Clear();
@@ -73,6 +93,9 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
+        /// <summary>
+        /// Helper function to determine the correct status value. It would be possible to use a value converter for this value.
+        /// </summary>
         private void UpdateStatus()
         {
             IProjectTime time = (SelectedProject != null) ? _dataSet.FirstOpenTime(SelectedProject) : null;

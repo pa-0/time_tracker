@@ -31,6 +31,6 @@
             <Label Content="Status:" Grid.Row="1" Grid.Column="0"/>
             <Label Content="{Binding Status}" Grid.Row="1" Grid.Column="1"/>
         </Grid>
-        <Button Command="{Binding PunchInOutCommand}" Margin="20,0,0,0" Content="Punch In/Out" Width="75" HorizontalAlignment="Left"/>
+        <Button Command="{Binding PunchInOutCommand}" CommandParameter="{Binding SelectedProject}" Margin="20,0,0,0" Content="Punch In/Out" Width="75" HorizontalAlignment="Left"/>
     </StackPanel>
 </Window>

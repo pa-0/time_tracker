@@ -77,6 +77,11 @@ namespace Ficksworkshop.TimeTracker
         /// </summary>
         public ICommand CreateProjectCommand { get; private set; }
 
+        /// <summary>
+        /// Bindable command to punch in or out of a selected project.
+        /// </summary>
+        public ICommand PunchInOutCommand { get; private set; }
+
         #endregion
 
         #region Constructors
@@ -93,7 +98,8 @@ namespace Ficksworkshop.TimeTracker
 
             Projects = new ObservableCollection<IProject>();
 
-            CreateProjectCommand = new CreateProjectCommand(null, () => NewProjectName);
+            CreateProjectCommand = new CreateProjectCommand(() => TrackerInstance.DataSet, null, () => NewProjectName);
+            PunchInOutCommand = new PunchInOutCommand();
         }
 
         #endregion

@@ -83,7 +83,7 @@ namespace Ficksworkshop.TimeTracker.Commands
         };
 
         // TODO hack hack hack
-        public static readonly ICommand CreateNewProjectCommand = new CreateProjectCommand(null, null);
+        public static readonly ICommand CreateNewProjectCommand = new CreateProjectCommand(() => TrackerInstance.DataSet, null, null);
 
         public static readonly ICommand DeleteProjectCommand = new DeleteProjectCommand();
 

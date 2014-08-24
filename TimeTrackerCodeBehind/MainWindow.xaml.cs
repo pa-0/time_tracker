@@ -10,8 +10,6 @@ namespace Ficksworkshop.TimeTracker
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IProjectTimesData _dataSet;
-
         public MainWindow()
         {
             InitializeComponent();

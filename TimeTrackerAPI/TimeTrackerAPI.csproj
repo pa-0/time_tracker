@@ -47,8 +47,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>AppSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Commands\CloseProjectCommand.cs" />
     <Compile Include="Commands\CreateProjectCommand.cs" />
     <Compile Include="Commands\DeleteProjectCommand.cs" />
+    <Compile Include="Commands\OpenProjectCommand.cs" />
     <Compile Include="Commands\PunchInOutCommand.cs" />
     <Compile Include="IProjectTimesData.cs" />
     <Compile Include="ProjectTimeExtensions.cs" />

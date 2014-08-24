@@ -1,11 +1,9 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
 using Ficksworkshop.TimeTrackerAPI;
 
 namespace Ficksworkshop.TimeTracker
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    internal class MainWindowViewModel : ViewModelBase
     {
         #region Properties
 
@@ -77,20 +75,6 @@ namespace Ficksworkshop.TimeTracker
             foreach (IProject project in DataSet.Projects)
             {
                 Projects.Add(project);
-            }
-        }
-
-        #endregion
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 

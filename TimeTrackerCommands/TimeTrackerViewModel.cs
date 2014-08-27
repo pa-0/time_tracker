@@ -14,13 +14,6 @@ namespace Ficksworkshop.TimeTracker
         /// </summary>
         public ObservableCollection<IProject> Projects { get; private set; }
 
-        /// <summary>
-        /// Bindable property for the new project name.
-        /// 
-        /// Since we don't set this in the dialog, I've omitted the notification.
-        /// </summary>
-        public string NewProjectName { get; set; }
-
         private IProject _selectedProject;
 
         /// <summary>
@@ -40,6 +33,29 @@ namespace Ficksworkshop.TimeTracker
                     NotifyPropertyChanged("SelectedProject");
 
                     UpdateStatus();
+                }
+            }
+        }
+
+        private string _newProjectName;
+
+        /// <summary>
+        /// Bindable property for the new project name.
+        /// 
+        /// Since we don't set this in the dialog, I've omitted the notification.
+        /// </summary>
+        public string NewProjectName
+        {
+            get
+            {
+                return _newProjectName;
+            }
+            set
+            {
+                if (_newProjectName != value)
+                {
+                    _newProjectName = value;
+                    NotifyPropertyChanged("NewProjectName");
                 }
             }
         }
@@ -73,6 +89,9 @@ namespace Ficksworkshop.TimeTracker
             Projects = new ObservableCollection<IProject>();
         }
 
+        /// <summary>
+        /// Adds a new project to the data set.
+        /// </summary>
         public void AddClicked()
         {
             string newName = NewProjectName;
@@ -104,6 +123,9 @@ namespace Ficksworkshop.TimeTracker
             Status = status;
         }
 
+        /// <summary>
+        /// Punches in or out of the selected project.
+        /// </summary>
         public void PunchInOutClicked()
         {
             // Get the selected project

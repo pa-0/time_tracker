@@ -55,7 +55,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Commands
         /// <remarks>We can execute if there is a context and a project.</remarks>
         public bool CanExecute(object parameter)
         {
-            return _projectTimesFunc.Invoke() != null && (_newNameFunc == null || !string.IsNullOrWhiteSpace(_newNameFunc.Invoke()));
+            return _projectTimesFunc.Invoke() != null;
         }
 
         public event EventHandler CanExecuteChanged

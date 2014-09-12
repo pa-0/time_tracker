@@ -2,7 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="ProjectTimesWindow" Height="300" Width="300">
-    <Grid>
-        
-    </Grid>
+    <StackPanel>
+        <Label Content="Start"/>
+        <DatePicker SelectedDate="{Binding FilterStart,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <Label Content="End"/>
+        <DatePicker SelectedDate="{Binding FilterEnd,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        <ComboBox ItemsSource="{Binding FilterProjects}"/>
+    </StackPanel>
 </Window>

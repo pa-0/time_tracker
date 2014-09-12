@@ -53,24 +53,11 @@ namespace Ficksworkshop.TimeTracker.Commands
                 CommandAction = () =>
                 {
                     IProjectTimesData dataSet = TrackerInstance.DataSet;
-                    DateTime start = DateTime.Now.Subtract(new TimeSpan(5, 0, 0, 0));
-                    DateTime end = DateTime.Now;
 
-                    var sortedProjectTimes = dataSet.ProjectsTimes(start, end).ToSortedProjectTimes();
-
-                    var outputString = new StringBuilder();
-                    foreach (ProjectTimesGroup group in sortedProjectTimes)
-                    {
-                        var totalTime = new TimeSpan();
-                        outputString.Append(group.Project.Name + ":");
-                        foreach (IProjectTime time in group.ProjectTimes)
-                        {
-                            totalTime += time.End.Value - time.Start;
-                        }
-                        outputString.Append(totalTime + "\n");
-
-                        MessageBox.Show(outputString.ToString());
-                    }
+                    Application.Current.MainWindow = new ProjectTimesWindow();
+                    var viewModel = new ProjectTimesViewModel(TrackerInstance.DataSet);
+                    Application.Current.MainWindow.DataContext = viewModel;
+                    Application.Current.MainWindow.Show();
                 }
             };
 

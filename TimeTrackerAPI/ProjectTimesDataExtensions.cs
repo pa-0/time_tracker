@@ -39,7 +39,7 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// <param name="start"></param>
         /// <param name="end"></param>
         /// <returns></returns>
-        public static IEnumerable<IProjectTime> ProjectsTimes(this IProjectTimesData dataSet, DateTime start, DateTime end)
+        public static IEnumerable<IProjectTime> ProjectsTimes(this IProjectTimesData dataSet, DateTime? start, DateTime? end)
         {
             foreach (var time in dataSet.Times.Where(pt => pt.Start > start && pt.End.HasValue && pt.End < end))
             {

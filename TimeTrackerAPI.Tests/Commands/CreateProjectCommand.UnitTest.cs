@@ -1,5 +1,5 @@
 ﻿using Ficksworkshop.TimeTrackerAPI.Commands;
-using Ficksworkshop.TimeTrackerAPI.Tests.Mock;
+using Ficksworkshop.TimeTracker.TestUtilities.Mock;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Ficksworkshop.TimeTrackerAPI.Tests.Commands

@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Ficksworkshop.TimeTrackerAPI;
+using System;
 using System.Collections.Generic;
 
-namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
+namespace Ficksworkshop.TimeTracker.TestUtilities.Mock
 {
     /// <summary>
     /// An implementation of the <see cref="IProjectTimesData"/> that exists only in memory
     /// (and used by testing)
     /// </summary>
-    internal class MemoryProjectTimesData : IProjectTimesData
+    public class MemoryProjectTimesData : IProjectTimesData
     {
         private IList<MemoryProject> _projects = new List<MemoryProject>();
 
@@ -18,7 +19,9 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
         /// <inheritdoc />
         public IProject CreateProject(string uniqueId, string name)
         {
-            return new MemoryProject(this);
+            var newProject = new MemoryProject(this);
+            _projects.Add(newProject);
+            return newProject;
         }
 
         /// <inheritdoc />
@@ -99,7 +102,7 @@ namespace Ficksworkshop.TimeTrackerAPI.Tests.Mock
                 }
                 set
                 {
-                    ActualProject = (MemoryProject) value;
+                    ActualProject = (MemoryProject)value;
                 }
             }
         }

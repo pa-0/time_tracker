@@ -1,5 +1,6 @@
-﻿using System.Windows;
-
+﻿using System.Linq;
+using System.Windows;
+using Ficksworkshop.TimeTrackerAPI;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Ficksworkshop.TimeTracker
@@ -15,6 +16,8 @@ namespace Ficksworkshop.TimeTracker
         {
            base.OnStartup(e);
 
+           RestoreLastState();
+
            _notificationIcon = (TaskbarIcon)FindResource("NotificationIcon");
         }
 
@@ -25,5 +28,15 @@ namespace Ficksworkshop.TimeTracker
             base.OnExit(e);
         }
 
+        private void RestoreLastState()
+        {
+            // Here should load settings from some default location. But not implemented storing of settings, so just set the values explicitly
+
+            // Default load the database
+            StringSetting setting = (StringSetting)TrackerInstance.Settings.Items.Where(i => i.Name == TrackerSettings.LastDataSet).First();
+            setting.Value = @"D:\timetracker.ttd";
+
+            TrackerInstance.OpenDataSet(setting.Value);
+        }
     }
 }

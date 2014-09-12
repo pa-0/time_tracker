@@ -4,7 +4,7 @@
         xmlns:local="clr-namespace:Ficksworkshop.TimeTracker"
         xmlns:ttapi="clr-namespace:Ficksworkshop.TimeTrackerAPI.View;assembly=TimeTrackerAPI"
         xmlns:commands="clr-namespace:Ficksworkshop.TimeTracker.Commands"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Time Tracker" Height="350" Width="525">
     <Window.Resources>
         <ttapi:ProjectStatusConverter x:Key="ProjectStatusConverter" />
     </Window.Resources>
@@ -15,8 +15,8 @@
                 <StackPanel>
                     <DataGrid ItemsSource="{Binding Projects}" SelectedItem="{Binding SelectedProject}" AutoGenerateColumns="False" IsReadOnly="False" VerticalAlignment="Top" Height="219" Width="476">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding Path=UniqueId, Mode=TwoWay}" Header="Id"/>
-                            <DataGridTextColumn Binding="{Binding Path=Name, Mode=TwoWay}" Header="Name"/>
+                            <DataGridTextColumn Binding="{Binding Path=UniqueId, Mode=TwoWay}" Header="ID" Width="75"/>
+                            <DataGridTextColumn Binding="{Binding Path=Name, Mode=TwoWay}" Header="Name" Width="250"/>
                             <DataGridTextColumn Binding="{Binding Path=Status, Mode=OneWay, Converter={StaticResource ProjectStatusConverter}}" Header="Status"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -30,7 +30,7 @@
             <TabItem Header="Settings">
                 <DataGrid ItemsSource="{Binding Settings}" AutoGenerateColumns="False" Margin="10,10,0,0" VerticalAlignment="Top" Height="200" Width="300">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Binding="{Binding Path=Name, Mode=OneWay}" Header="Setting"/>
+                        <DataGridTextColumn Binding="{Binding Path=Name, Mode=OneWay}" Header="Setting" Width="Auto"/>
                         <DataGridTextColumn Binding="{Binding Path=Value, Mode=TwoWay}" Header="Value"/>
                     </DataGrid.Columns>
                 </DataGrid>

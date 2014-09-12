@@ -4,7 +4,7 @@ using Ficksworkshop.TimeTrackerAPI;
 
 namespace Ficksworkshop.TimeTracker
 {
-    public class NotificationIconViewModel : INotifyPropertyChanged
+    public class NotificationIconViewModel : ViewModelBase
     {
         #region Properties
 
@@ -62,20 +62,6 @@ namespace Ficksworkshop.TimeTracker
             {
                 TrackerInstance.DataSet.ProjectsChanged += ProjectsChangedEventHandler;
                 TrackerInstance.DataSet.ProjectTimeChanged += ProjectTimeChangedEventHandler;
-            }
-        }
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 

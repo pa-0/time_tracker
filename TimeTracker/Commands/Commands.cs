@@ -25,7 +25,7 @@ namespace Ficksworkshop.TimeTracker.Commands
                     // Get the current path
                     StringSetting pathSetting = (StringSetting)TrackerInstance.Settings.Items.Where(i => i.Name == TrackerSettings.LastDataSet).First();
 
-                    // TODO hack hack to get things working
+
                     XmlDataSetProjectTimesData xmlDataSet = (XmlDataSetProjectTimesData) TrackerInstance.DataSet;
                     TextWriter writer = new StreamWriter(new FileStream(pathSetting.Value, FileMode.OpenOrCreate));
                     xmlDataSet.WriteDatabase(writer);

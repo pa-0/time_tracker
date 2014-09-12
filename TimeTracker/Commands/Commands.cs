@@ -1,8 +1,10 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Win32;
 using Ficksworkshop.TimeTrackerAPI;
 using Ficksworkshop.TimeTrackerAPI.Commands;
 
@@ -13,9 +15,6 @@ namespace Ficksworkshop.TimeTracker.Commands
     /// </summary>
     public static class Commands
     {
-        // TODO hack hack hack
-        private static string filePath = @"D:\timetracker.ttd";
-
         /// <summary>
         /// Command to shutdown the application.
         /// </summary>
@@ -23,9 +22,12 @@ namespace Ficksworkshop.TimeTracker.Commands
             {
                 CommandAction = () =>
                 {
+                    // Get the current path
+                    StringSetting pathSetting = (StringSetting)TrackerInstance.Settings.Items.Where(i => i.Name == TrackerSettings.LastDataSet).First();
+
                     // TODO hack hack to get things working
                     XmlDataSetProjectTimesData xmlDataSet = (XmlDataSetProjectTimesData) TrackerInstance.DataSet;
-                    TextWriter writer = new StreamWriter(new FileStream(filePath, FileMode.OpenOrCreate));
+                    TextWriter writer = new StreamWriter(new FileStream(pathSetting.Value, FileMode.OpenOrCreate));
                     xmlDataSet.WriteDatabase(writer);
                     Application.Current.Shutdown();
                 }
@@ -70,7 +72,36 @@ namespace Ficksworkshop.TimeTracker.Commands
         {
             CommandAction = () =>
             {
-                TrackerInstance.OpenDataSet(filePath);
+                MessageBoxResult result = MessageBoxResult.Yes;
+
+                // Check if we have an open data set that we might want to modify. Right now there isn't a dirty mark, so
+                // I'm doing a simple check of any projects. If there are projects, then assume there is data that we might
+                // want to save
+                if (TrackerInstance.DataSet.Projects.Any())
+                {
+                    result = MessageBox.Show(Resources.SaveTrackerData, "", MessageBoxButton.YesNo);
+                }
+
+                // Ask for the file that we want to open
+                if (result == MessageBoxResult.Yes)
+                {
+                    var openFileDialog = new OpenFileDialog();
+                    if (openFileDialog.ShowDialog().Value)
+                    {
+                        // If we are ok, then open the new tracker data set
+                        try
+                        {
+                            TrackerInstance.OpenDataSet(openFileDialog.FileName);
+
+                            // Since we were successful, set the new path as our last path
+                            TrackerInstance.Settings.Items.Where(i => i.Name == TrackerSettings.LastDataSet).First().Value = openFileDialog.FileName;
+                        }
+                        catch (Exception)
+                        {
+                            // TODO catching all is bad!
+                        }
+                    }
+                }
             }
         };
 

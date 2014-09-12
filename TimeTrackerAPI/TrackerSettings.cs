@@ -5,22 +5,19 @@ namespace Ficksworkshop.TimeTrackerAPI
 {
     public interface ITrackerSetting : INotifyPropertyChanged
     {
+        /// <summary>
+        /// The internal name of the setting
+        /// </summary>
         string Name { get; }
 
+        /// <summary>
+        /// Get or set the value of the setting
+        /// </summary>
         string Value { get; set; }
     }
 
-    public class UintSetting : ITrackerSetting
+    public abstract class TrackerSettingBase : ITrackerSetting
     {
-        #region Constructor
-
-        public UintSetting(string name)
-        {
-            _name = name;
-        }
-
-        #endregion
-
         #region Properties
 
         private readonly string _name;
@@ -29,14 +26,92 @@ namespace Ficksworkshop.TimeTrackerAPI
         {
             get
             {
-                
+
                 return _name;
             }
         }
 
+        #endregion
+
+        #region Constructor
+
+        public TrackerSettingBase(string name)
+        {
+            _name = name;
+        }
+
+        #endregion
+
+        #region ITrackerSetting
+
+        public abstract string Value { get; set; }
+
+        #endregion
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void NotifyPropertyChanged(string propertyName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
+        #endregion
+    }
+
+    public class StringSetting : TrackerSettingBase
+    {
+        #region Constructor
+
+        public StringSetting(string name)
+            : base(name)
+        {
+        }
+
+        #endregion
+
+        #region Properties
+
+        private string _value;
+
+        public override string Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                if (value != _value)
+                {
+                    _value = value;
+                    this.NotifyPropertyChanged("Value");
+                }
+            }
+        }
+
+        #endregion
+    }
+
+    public class UintSetting : TrackerSettingBase
+    {
+        #region Constructor
+
+        public UintSetting(string name) : base(name)
+        {
+        }
+
+        #endregion
+
+        #region Properties
+
         private uint _value;
 
-        public string Value
+        public override string Value
         {
             get
             {
@@ -69,20 +144,6 @@ namespace Ficksworkshop.TimeTrackerAPI
         }
 
         #endregion
-
-        #region INotifyPropertyChanged
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            if (this.PropertyChanged != null)
-            {
-                this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-        #endregion
     }
 
     /// <summary>
@@ -92,6 +153,16 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// </summary>
     public class TrackerSettings
     {
+        #region Constants
+
+        public const string ReminderFrequency = "ReminderFrequence";
+
+        public const string MaximumIdleTime = "MaximumIdleTime";
+
+        public const string LastDataSet = "LastDataSet";
+
+        #endregion
+
         #region Properties
 
         public ObservableCollection<ITrackerSetting> Items { get; private set; }
@@ -109,11 +180,13 @@ namespace Ficksworkshop.TimeTrackerAPI
 
             // Populate the settings from the actual properties
 
-            var reminderInterval = new UintSetting("ReminderFrequency") { UintValue = 0 };
-            var maximumIdleTime = new UintSetting("MaximumIdleTime") { UintValue = 0 };
+            var reminderInterval = new UintSetting(ReminderFrequency) { UintValue = 0 };
+            var maximumIdleTime = new UintSetting(MaximumIdleTime) { UintValue = 0 };
+            var lastDataSet = new StringSetting(LastDataSet) { Value = "" };
 
             Items.Add(reminderInterval);
             Items.Add(maximumIdleTime);
+            Items.Add(lastDataSet);
         }
 
         #endregion

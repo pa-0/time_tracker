@@ -46,7 +46,9 @@ namespace Ficksworkshop.TimeTracker.Commands
                     }
             };
 
-        // TODO this is horrible and temporary, but I'm ok with this for now
+        /// <summary>
+        /// Show a dialog that can summaries information about project times.
+        /// </summary>
         public static readonly ICommand ViewDayDetailsCommand = new DelegateCommand
             {
                 CanExecuteFunc = () => TrackerInstance.DataSet != null && Application.Current.MainWindow == null,
@@ -61,6 +63,9 @@ namespace Ficksworkshop.TimeTracker.Commands
                 }
             };
 
+        /// <summary>
+        /// Load or change the current data set. Currently, this just picks a default path.
+        /// </summary>
         public static readonly ICommand LoadDataSetCommand = new DelegateCommand
         {
             CommandAction = () =>

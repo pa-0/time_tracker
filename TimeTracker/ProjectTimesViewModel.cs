@@ -15,12 +15,19 @@ namespace Ficksworkshop.TimeTracker
     {
         #region Fields
 
+        /// <summary>
+        /// The data set to display.
+        /// </summary>
         private readonly IProjectTimesData _dataSet;
 
         #endregion
 
         #region Properties
 
+        /// <summary>
+        /// The project times that should be displayed. What times are in the list
+        /// depend on the filter properties.
+        /// </summary>
         public ObservableCollection<IProjectTime> ProjectTimes { get; private set; }
 
         private DateTime? _start = null;
@@ -107,6 +114,10 @@ namespace Ficksworkshop.TimeTracker
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectTimesViewModel"/> class.
+        /// </summary>
+        /// <param name="dataSet">The data set to show information for.</param>
         public ProjectTimesViewModel(IProjectTimesData dataSet)
         {
             _dataSet = dataSet;
@@ -121,22 +132,34 @@ namespace Ficksworkshop.TimeTracker
             dataSet.ProjectsChanged += ProjectsChanged;
         }
 
-        void ProjectsChanged(object sender, object e)
+        #endregion
+
+        #region Private Members
+
+        /// <summary>
+        /// Event handler called when the list of projects changes.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ProjectsChanged(object sender, object e)
         {
             // TODO I'm being lazy here and just removing and adding. Once there is a way to know
             // which projects were added/removed, then I can more inteligently add/remove from
             // the collection
 
             FilterProjects.Clear();
-            foreach(var project in _dataSet.Projects)
+            foreach (var project in _dataSet.Projects)
             {
                 FilterProjects.Add(project);
             }
+            
+            // If we are filtering on a project and the project isn't currently in the list, then stop
+            // filtering on that project.
+            if (FilterSelectedProject != null && !FilterProjects.Contains(FilterSelectedProject))
+            {
+                FilterSelectedProject = null;
+            }
         }
-
-        #endregion
-
-        #region Private Members
 
         private void RefreshProjectTimes()
         {

@@ -62,9 +62,46 @@ namespace Ficksworkshop.TimeTracker
         }
 
         /// <summary>
-        /// Filters the project times to display only times from the selected projects
+        /// List of projects that can be filtered on
         /// </summary>
         public ObservableCollection<IProject> FilterProjects { get; private set; }
+
+        private IProject _filterSelectedProject = null;
+        /// <summary>
+        /// If not null, sets to only show times from the specified project.
+        /// </summary>
+        public IProject FilterSelectedProject
+        {
+            get { return _filterSelectedProject; }
+            set
+            {
+                if (value != _filterSelectedProject)
+                {
+                    _filterSelectedProject = value;
+                    NotifyPropertyChanged("FilterSelectedProject");
+
+                    RefreshProjectTimes();
+                }
+            }
+        }
+
+        private TimeSpan _totalTime = new TimeSpan(0);
+
+        /// <summary>
+        /// The total time for all of the visible project times.
+        /// </summary>
+        public TimeSpan TotalTime
+        {
+            get { return _totalTime; }
+            set
+            {
+                if (value != _totalTime)
+                {
+                    _totalTime = value;
+                    NotifyPropertyChanged("TotalTime");
+                }
+            }
+        }
 
         #endregion
 
@@ -77,7 +114,6 @@ namespace Ficksworkshop.TimeTracker
             ProjectTimes = new ObservableCollection<IProjectTime>();
 
             FilterProjects = new ObservableCollection<IProject>();
-            FilterProjects.CollectionChanged += FilterProjectsOnCollectionChanged;
 
             // Populate the list of projects we can filter on
             ProjectsChanged(null, null);
@@ -102,16 +138,6 @@ namespace Ficksworkshop.TimeTracker
 
         #region Private Members
 
-        /// <summary>
-        /// Event handler for when the filter list changes so we can update the filtered projects
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="notifyCollectionChangedEventArgs"></param>
-        private void FilterProjectsOnCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
-        {
-            RefreshProjectTimes();
-        }
-
         private void RefreshProjectTimes()
         {
             // Repopulate the project times list according to the filter settings
@@ -128,7 +154,7 @@ namespace Ficksworkshop.TimeTracker
             }
             
             // Add the filter by project only if we have any project selected
-            if (FilterProjects.Count > 0)
+            if (FilterSelectedProject != null)
             {
                 times = times.Where(pt => FilterProjects.Contains(pt.Project));
             }
@@ -137,6 +163,9 @@ namespace Ficksworkshop.TimeTracker
             {
                 ProjectTimes.Add(projectTime);
             }
+
+            // Calculate the total time and set the property so we can easily see it
+            TotalTime = ProjectTimes.SumTimeSpan();
         }
 
         #endregion

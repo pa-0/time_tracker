@@ -58,6 +58,7 @@
     <Compile Include="ProjectTimesDataExtensions.cs" />
     <Compile Include="TrackerInstance.cs" />
     <Compile Include="View\ProjectStatusConverter.cs" />
+    <Compile Include="View\TimeSpanConverter.cs" />
     <Compile Include="XmlDataSetProjectProxy.cs" />
     <Compile Include="XmlDataSetProjectTimeProxy.cs" />
     <Compile Include="XmlDataSetProjectTimesData.cs" />

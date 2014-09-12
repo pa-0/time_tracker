@@ -49,7 +49,7 @@ namespace Ficksworkshop.TimeTracker.Commands
         // TODO this is horrible and temporary, but I'm ok with this for now
         public static readonly ICommand ViewDayDetailsCommand = new DelegateCommand
             {
-                CanExecuteFunc = () => TrackerInstance.DataSet != null,
+                CanExecuteFunc = () => TrackerInstance.DataSet != null && Application.Current.MainWindow == null,
                 CommandAction = () =>
                 {
                     IProjectTimesData dataSet = TrackerInstance.DataSet;

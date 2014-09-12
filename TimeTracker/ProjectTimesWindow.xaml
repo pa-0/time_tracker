@@ -1,12 +1,21 @@
 ﻿<Window x:Class="Ficksworkshop.TimeTracker.ProjectTimesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ttapi="clr-namespace:Ficksworkshop.TimeTrackerAPI.View;assembly=TimeTrackerAPI"
         Title="ProjectTimesWindow" Height="300" Width="300">
+    <Window.Resources>
+        <ttapi:TimeSpanConverter x:Key="TimeSpanConverter" />
+    </Window.Resources>
     <StackPanel>
         <Label Content="Start"/>
         <DatePicker SelectedDate="{Binding FilterStart,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
         <Label Content="End"/>
         <DatePicker SelectedDate="{Binding FilterEnd,Mode=TwoWay}" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-        <ComboBox ItemsSource="{Binding FilterProjects}"/>
+        <Label Content="Project"/>
+        <ComboBox ItemsSource="{Binding FilterProjects}" SelectedItem="{Binding FilterSelectedProject}"/>
+        <Label Content="Times"/>
+        <DataGrid ItemsSource="{Binding ProjectTimes}" Height="Auto"/>
+        <Label Content="Sum"/>
+        <Label Content="{Binding Path=TotalTime, Converter={StaticResource TimeSpanConverter}}"/>
     </StackPanel>
 </Window>

@@ -64,5 +64,25 @@ namespace Ficksworkshop.TimeTrackerAPI
 
             return sortedProjectTimes;
         }
+
+        /// <summary>
+        /// Sum the time span for the project times.
+        /// </summary>
+        /// <param name="times"></param>
+        /// <returns></returns>
+        public static TimeSpan SumTimeSpan(this IEnumerable<IProjectTime> times)
+        {
+            var timeSpan = new TimeSpan();
+
+            foreach (var time in times)
+            {
+                if (time.End != null)
+                {
+                    timeSpan += (time.End.Value - time.Start);
+                }
+            }
+
+            return timeSpan;
+        }
     }
 }

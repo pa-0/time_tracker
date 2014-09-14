@@ -12,13 +12,18 @@ namespace Ficksworkshop.TimeTracker
     {
         private TaskbarIcon _notificationIcon;
 
+        private SelectedProjectManager _selectedProjectManager;
+
         protected override void OnStartup(StartupEventArgs e)
         {
            base.OnStartup(e);
 
            RestoreLastState();
 
+           _selectedProjectManager = new SelectedProjectManager();
+
            _notificationIcon = (TaskbarIcon)FindResource("NotificationIcon");
+           _notificationIcon.DataContext = new NotificationIconViewModel(_selectedProjectManager);
         }
 
         protected override void OnExit(ExitEventArgs e)

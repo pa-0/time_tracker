@@ -9,6 +9,7 @@
                 <Style>
                     <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
                     <Setter Property="MenuItem.Command" Value="{Binding ActivateProjectCommand}"/>
+                    <Setter Property="MenuItem.IsCheckable" Value="True"/>
                 </Style>
             </MenuItem.ItemContainerStyle>
         </MenuItem>
@@ -38,8 +39,5 @@
                     ToolTipText="Double-click to punch-in/punch-out"
                     DoubleClickCommand="{x:Static commands:Commands.PunchInOutCommand}"
                     ContextMenu="{StaticResource SysTrayMenu}">
-        <tb:TaskbarIcon.DataContext>
-            <local:NotificationIconViewModel/>
-        </tb:TaskbarIcon.DataContext>
     </tb:TaskbarIcon>
 </ResourceDictionary>

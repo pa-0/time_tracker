@@ -6,6 +6,12 @@ namespace Ficksworkshop.TimeTracker
 {
     public class NotificationIconViewModel : ViewModelBase
     {
+        #region Fields
+
+        private SelectedProjectManager _selectedProjectManager;
+
+        #endregion
+
         #region Properties
 
         private bool _isPunchedIn;
@@ -47,13 +53,34 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        public IProject SelectedProject { get; set; }
+        private IProject _selectedProject;
+
+        /// <summary>
+        /// Gets or sets the selected project to quiickly punch in or out of a project.
+        /// </summary>
+        public IProject SelectedProject
+        {
+            get
+            {
+                return _selectedProject;
+            }
+            set
+            {
+                // First try to change in the selected project manager, since the change might be rejected
+                if (value != _selectedProject && _selectedProjectManager.SetSelectedProject(value))
+                {
+                    // Ok, it was changed, so actually update the property
+                    _selectedProject = value;
+                    NotifyPropertyChanged("SelectedProject");
+                }
+            }
+        }
 
         #endregion
 
         #region Constructors
 
-        public NotificationIconViewModel()
+        public NotificationIconViewModel(SelectedProjectManager selectedProjectManager)
         {
             // When we are constructed, we need to listen to events coming from the data
             // set so that we can update our local view.
@@ -63,6 +90,9 @@ namespace Ficksworkshop.TimeTracker
                 TrackerInstance.DataSet.ProjectsChanged += ProjectsChangedEventHandler;
                 TrackerInstance.DataSet.ProjectTimeChanged += ProjectTimeChangedEventHandler;
             }
+
+            _selectedProjectManager = selectedProjectManager;
+            _selectedProjectManager.SelectedProjectChanged += SelectedProjectChangedEventHandler;
         }
 
         #endregion
@@ -104,6 +134,16 @@ namespace Ficksworkshop.TimeTracker
             }
 
             ProjectsChangedEventHandler(null, null);
+        }
+
+        /// <summary>
+        /// Handler when the selected project changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void SelectedProjectChangedEventHandler(object sender, SelectedProjectChangedEventArgs eventArgs)
+        {
+            SelectedProject = eventArgs.NewProject;
         }
 
         #endregion

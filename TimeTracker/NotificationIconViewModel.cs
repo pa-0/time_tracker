@@ -32,12 +32,12 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        private ObservableCollection<IProject> _activeProjects = new ObservableCollection<IProject>();
+        private ObservableCollection<SelectableProjectViewModel> _activeProjects = new ObservableCollection<SelectableProjectViewModel>();
 
         /// <summary>
         /// The list of projects that we can punch in or punch out of.
         /// </summary>
-        public ObservableCollection<IProject> ActiveProjects
+        public ObservableCollection<SelectableProjectViewModel> ActiveProjects
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Ficksworkshop.TimeTracker
             {
                 if (project.Status != ProjectStatus.Closed)
                 {
-                    ActiveProjects.Add(project);
+                    ActiveProjects.Add(new SelectableProjectViewModel(project, _selectedProjectManager));
                 }
             }
         }
@@ -143,6 +143,7 @@ namespace Ficksworkshop.TimeTracker
         /// <param name="eventArgs"></param>
         private void SelectedProjectChangedEventHandler(object sender, SelectedProjectChangedEventArgs eventArgs)
         {
+            // This needs to cause the projecs view model to send the notification
             SelectedProject = eventArgs.NewProject;
         }
 

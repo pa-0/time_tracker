@@ -10,6 +10,7 @@
                     <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
                     <Setter Property="MenuItem.Command" Value="{Binding ActivateProjectCommand}"/>
                     <Setter Property="MenuItem.IsCheckable" Value="True"/>
+                    <Setter Property="MenuItem.IsChecked" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
                 </Style>
             </MenuItem.ItemContainerStyle>
         </MenuItem>

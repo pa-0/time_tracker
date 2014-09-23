@@ -4,6 +4,7 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker
 {

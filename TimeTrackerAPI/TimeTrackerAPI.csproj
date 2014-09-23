@@ -53,7 +53,7 @@
     <Compile Include="Commands\OpenProjectCommand.cs" />
     <Compile Include="Commands\PunchInOutCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="IProjectTimesData.cs" />
+    <Compile Include="Model\IProjectTimesData.cs" />
     <Compile Include="ProjectTimeExtensions.cs" />
     <Compile Include="ProjectTimesDataExtensions.cs" />
     <Compile Include="TrackerInstance.cs" />

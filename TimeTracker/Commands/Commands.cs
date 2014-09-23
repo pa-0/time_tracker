@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
 using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTracker.Model;
 using Ficksworkshop.TimeTrackerAPI.Commands;
 
 namespace Ficksworkshop.TimeTracker.Commands
@@ -79,7 +80,8 @@ namespace Ficksworkshop.TimeTracker.Commands
                 // want to save
                 if (TrackerInstance.DataSet.Projects.Any())
                 {
-                    result = MessageBox.Show(Resources.SaveTrackerData, "", MessageBoxButton.YesNo);
+                    // TODO somehow this went missing
+                    result = MessageBox.Show(null, "", MessageBoxButton.YesNo);
                 }
 
                 // Ask for the file that we want to open

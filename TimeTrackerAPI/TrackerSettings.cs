@@ -3,10 +3,14 @@ using System.ComponentModel;
 
 namespace Ficksworkshop.TimeTrackerAPI
 {
+    /// <summary>
+    /// A simple setting.
+    /// </summary>
     public interface ITrackerSetting : INotifyPropertyChanged
     {
         /// <summary>
-        /// The internal name of the setting
+        /// The viewable name of the setting. This value may be translated
+        /// and shouldn't be used as a lookup key.
         /// </summary>
         string Name { get; }
 
@@ -14,14 +18,23 @@ namespace Ficksworkshop.TimeTrackerAPI
         /// Get or set the value of the setting
         /// </summary>
         string Value { get; set; }
+
+        /// <summary>
+        /// The key for serialization of this setting.
+        /// </summary>
+        string SerializationKey { get; }
     }
 
+    /// <summary>
+    /// Useful common base class for settings.
+    /// </summary>
     public abstract class TrackerSettingBase : ITrackerSetting
     {
         #region Properties
 
         private readonly string _name;
 
+        /// <inheritdoc />
         public string Name
         {
             get
@@ -31,10 +44,25 @@ namespace Ficksworkshop.TimeTrackerAPI
             }
         }
 
+        /// <inheritdoc />
+        public string SerializationKey
+        {
+            get
+            {
+
+                // TODO for now, no translation, no beautification
+                return _name;
+            }
+        }
+
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrackerSettingBase"/> class.
+        /// </summary>
+        /// <param name="name"></param>
         public TrackerSettingBase(string name)
         {
             _name = name;
@@ -44,14 +72,17 @@ namespace Ficksworkshop.TimeTrackerAPI
 
         #region ITrackerSetting
 
+        /// <inheritdoc />
         public abstract string Value { get; set; }
 
         #endregion
 
         #region INotifyPropertyChanged
 
+        /// <inheritdoc />
         public event PropertyChangedEventHandler PropertyChanged;
 
+        /// <inheritdoc />
         protected void NotifyPropertyChanged(string propertyName)
         {
             if (this.PropertyChanged != null)
@@ -63,10 +94,17 @@ namespace Ficksworkshop.TimeTrackerAPI
         #endregion
     }
 
+    /// <summary>
+    /// A setting backed by a string value.
+    /// </summary>
     public class StringSetting : TrackerSettingBase
     {
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StringSetting"/> class.
+        /// </summary>
+        /// <param name="name">The key and display name, all in one.</param>
         public StringSetting(string name)
             : base(name)
         {
@@ -78,6 +116,7 @@ namespace Ficksworkshop.TimeTrackerAPI
 
         private string _value;
 
+        /// <inheritdoc />
         public override string Value
         {
             get
@@ -97,10 +136,17 @@ namespace Ficksworkshop.TimeTrackerAPI
         #endregion
     }
 
+    /// <summary>
+    /// A setting backed by a unsigned integer value.
+    /// </summary>
     public class UintSetting : TrackerSettingBase
     {
         #region Constructor
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UintSetting"/> class.
+        /// </summary>
+        /// <param name="name">The key and display name, all in one.</param>
         public UintSetting(string name) : base(name)
         {
         }
@@ -111,6 +157,7 @@ namespace Ficksworkshop.TimeTrackerAPI
 
         private uint _value;
 
+        /// <inheritdoc />
         public override string Value
         {
             get
@@ -127,6 +174,9 @@ namespace Ficksworkshop.TimeTrackerAPI
             }
         }
 
+        /// <summary>
+        /// Gets or sets the value as a uint.
+        /// </summary>
         public uint UintValue
         {
             get
@@ -165,6 +215,9 @@ namespace Ficksworkshop.TimeTrackerAPI
 
         #region Properties
 
+        /// <summary>
+        /// Gets the list of settings for the application.
+        /// </summary>
         public ObservableCollection<ITrackerSetting> Items { get; private set; }
 
         #endregion

@@ -3,6 +3,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Ficksworkshop.TimeTrackerAPI;
 using Ficksworkshop.TimeTrackerAPI.Commands;
+using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker
 {

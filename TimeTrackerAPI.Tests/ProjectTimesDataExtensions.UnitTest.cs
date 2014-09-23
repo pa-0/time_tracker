@@ -1,7 +1,7 @@
 ﻿using System;
-using Ficksworkshop.TimeTracker.TestUtilities.Mock;
-
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ficksworkshop.TimeTracker.Model;
+using Ficksworkshop.TimeTracker.TestUtilities.Mock;
 
 namespace Ficksworkshop.TimeTrackerAPI
 {

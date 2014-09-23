@@ -1,6 +1,7 @@
-﻿using Ficksworkshop.TimeTrackerAPI;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker.TestUtilities.Mock
 {

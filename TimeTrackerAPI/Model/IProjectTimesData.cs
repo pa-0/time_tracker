@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Ficksworkshop.TimeTrackerAPI
+namespace Ficksworkshop.TimeTracker.Model
 {
     public delegate void ProjectsChangedEventHandler(object sender, object e);
 

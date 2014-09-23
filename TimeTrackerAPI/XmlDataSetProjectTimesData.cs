@@ -12,7 +12,7 @@ namespace Ficksworkshop.TimeTrackerAPI
     /// This is the representation of the project data so that the main application has no way to know
     /// that we are string information in XML.
     /// </summary>
-    public class XmlDataSetProjectTimesData : IProjectTimesData
+    internal class XmlDataSetProjectTimesData : IProjectTimesData
     {
         #region Properties
 

@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
-using Ficksworkshop.TimeTrackerAPI;
 using Ficksworkshop.TimeTracker.Commands;
 using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
@@ -24,13 +23,9 @@ namespace Ficksworkshop.TimeTracker.Commands
             {
                 CommandAction = () =>
                 {
-                    // Get the current path
-                    StringSetting pathSetting = (StringSetting)TrackerInstance.Settings.Items.Where(i => i.Name == TrackerSettings.LastDataSet).First();
-
-                    // TODO hack hack to get things working
-                    XmlDataSetProjectTimesData xmlDataSet = (XmlDataSetProjectTimesData) TrackerInstance.DataSet;
-                    TextWriter writer = new StreamWriter(new FileStream(pathSetting.Value, FileMode.OpenOrCreate));
-                    xmlDataSet.WriteDatabase(writer);
+                    // If don't close, then things won't be saved
+                    TrackerInstance.CloseDataSet();
+                    
                     Application.Current.Shutdown();
                 }
             };

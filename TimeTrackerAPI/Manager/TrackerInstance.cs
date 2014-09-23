@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using Ficksworkshop.TimeTracker.Model;
 using Ficksworkshop.TimeTrackerAPI;
 
@@ -78,6 +79,23 @@ namespace Ficksworkshop.TimeTracker.Manager
         #endregion
 
         #region Public Members
+
+        /// <summary>
+        /// Close the current data set connection
+        /// </summary>
+        public static void CloseDataSet()
+        {
+            if (DataSet != null)
+            {
+                // Get the current path
+                StringSetting pathSetting = (StringSetting)Settings.Items.Where(i => i.Name == TrackerSettings.LastDataSet).First();
+
+                // TODO hack hack to get things working
+                XmlDataSetProjectTimesData xmlDataSet = (XmlDataSetProjectTimesData)TrackerInstance.DataSet;
+                TextWriter writer = new StreamWriter(new FileStream(pathSetting.Value, FileMode.OpenOrCreate));
+                xmlDataSet.WriteDatabase(writer);
+            }
+        }
 
         public static IProjectTimesData OpenDataSet(string fileName)
         {

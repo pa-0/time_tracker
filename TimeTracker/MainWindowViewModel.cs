@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using Ficksworkshop.TimeTrackerAPI;
 using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker

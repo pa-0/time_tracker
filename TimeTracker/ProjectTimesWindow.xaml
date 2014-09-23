@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Ficksworkshop.TimeTracker.ProjectTimesWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:ttapi="clr-namespace:Ficksworkshop.TimeTrackerAPI.View;assembly=TimeTrackerAPI"
+        xmlns:ttapi="clr-namespace:Ficksworkshop.TimeTracker.View;assembly=TimeTrackerAPI"
         Title="Project Times" Height="300" Width="300">
     <Window.Resources>
         <ttapi:TimeSpanConverter x:Key="TimeSpanConverter" />

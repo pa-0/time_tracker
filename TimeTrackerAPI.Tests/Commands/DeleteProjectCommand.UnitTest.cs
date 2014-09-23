@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Ficksworkshop.TimeTrackerAPI.Commands;
+using Ficksworkshop.TimeTracker.Commands;
 using Ficksworkshop.TimeTracker.Model;
 using Ficksworkshop.TimeTracker.TestUtilities.Mock;
 

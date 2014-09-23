@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTrackerAPI
+namespace Ficksworkshop.TimeTracker.Model
 {
     /// <summary>
     /// Represents a group of related times for the same project.

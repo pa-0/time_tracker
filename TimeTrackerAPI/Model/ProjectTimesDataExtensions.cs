@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTrackerAPI
+namespace Ficksworkshop.TimeTracker.Model
 {
     /// <summary>
     /// Extension methos for <see cref="IProjectTimesData"/>. These extension methods should work on any

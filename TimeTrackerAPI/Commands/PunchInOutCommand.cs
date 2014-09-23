@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTrackerAPI.Commands
+namespace Ficksworkshop.TimeTracker.Commands
 {
     /// <summary>
     /// A standard command to punch into to or punch out of a project. If not punched in, this acts as a punch in,

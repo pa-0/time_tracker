@@ -2,7 +2,7 @@
 using System.Windows.Input;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTrackerAPI.Commands
+namespace Ficksworkshop.TimeTracker.Commands
 {
     /// <summary>
     /// A standard command that sets the project status to closed.

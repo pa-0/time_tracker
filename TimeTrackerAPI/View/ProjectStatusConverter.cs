@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTrackerAPI.View
+namespace Ficksworkshop.TimeTracker.View
 {
     [ValueConversion(typeof(ProjectStatus), typeof(String))]
     public class ProjectStatusConverter : IValueConverter

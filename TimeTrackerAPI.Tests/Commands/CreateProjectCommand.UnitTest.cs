@@ -1,8 +1,8 @@
-﻿using Ficksworkshop.TimeTrackerAPI.Commands;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Ficksworkshop.TimeTracker.Commands;
 using Ficksworkshop.TimeTracker.TestUtilities.Mock;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Ficksworkshop.TimeTrackerAPI.Tests.Commands
+namespace Ficksworkshop.TimeTracker.Tests.Commands
 {
     [TestClass]
     public class CreateProjectCommandUnitTest

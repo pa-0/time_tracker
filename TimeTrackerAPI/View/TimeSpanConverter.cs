@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Windows.Data;
 
-namespace Ficksworkshop.TimeTrackerAPI.View
+namespace Ficksworkshop.TimeTracker.View
 {
     [ValueConversion(typeof(TimeSpan), typeof(String))]
     public class TimeSpanConverter : IValueConverter

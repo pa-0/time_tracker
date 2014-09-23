@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace Ficksworkshop.TimeTrackerAPI.Commands
+namespace Ficksworkshop.TimeTracker.Commands
 {
     public class RelayCommand : ICommand
     {

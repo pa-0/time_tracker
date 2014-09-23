@@ -54,8 +54,8 @@
     <Compile Include="Commands\PunchInOutCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Model\IProjectTimesData.cs" />
-    <Compile Include="ProjectTimeExtensions.cs" />
-    <Compile Include="ProjectTimesDataExtensions.cs" />
+    <Compile Include="Model\ProjectTimeExtensions.cs" />
+    <Compile Include="Model\ProjectTimesDataExtensions.cs" />
     <Compile Include="TrackerInstance.cs" />
     <Compile Include="View\ProjectStatusConverter.cs" />
     <Compile Include="View\TimeSpanConverter.cs" />

@@ -56,7 +56,7 @@
     <Compile Include="Model\IProjectTimesData.cs" />
     <Compile Include="Model\ProjectTimeExtensions.cs" />
     <Compile Include="Model\ProjectTimesDataExtensions.cs" />
-    <Compile Include="TrackerInstance.cs" />
+    <Compile Include="Manager\TrackerInstance.cs" />
     <Compile Include="View\ProjectStatusConverter.cs" />
     <Compile Include="View\TimeSpanConverter.cs" />
     <Compile Include="XmlDataSetProjectProxy.cs" />
@@ -72,7 +72,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TimesDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="TrackerSettings.cs" />
+    <Compile Include="Model\TrackerSettings.cs" />
     <Compile Include="XmlDataSetProxyFactory.cs" />
   </ItemGroup>
   <ItemGroup>

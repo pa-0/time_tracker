@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Windows;
-using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTracker.Manager;
+using Ficksworkshop.TimeTracker.Model;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Ficksworkshop.TimeTracker

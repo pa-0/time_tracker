@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace Ficksworkshop.TimeTrackerAPI
+namespace Ficksworkshop.TimeTracker.Model
 {
     /// <summary>
     /// A simple setting.

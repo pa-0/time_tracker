@@ -1,7 +1,8 @@
 ﻿using System.IO;
 using Ficksworkshop.TimeTracker.Model;
+using Ficksworkshop.TimeTrackerAPI;
 
-namespace Ficksworkshop.TimeTrackerAPI
+namespace Ficksworkshop.TimeTracker.Manager
 {
     public delegate void DataSetEventHandler(IProjectTimesData oldDataSet, IProjectTimesData newDataSet);
 

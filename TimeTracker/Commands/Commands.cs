@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Microsoft.Win32;
 using Ficksworkshop.TimeTrackerAPI;
 using Ficksworkshop.TimeTracker.Commands;
+using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker.Commands

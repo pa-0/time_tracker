@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Ficksworkshop.TimeTrackerAPI;
+using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker

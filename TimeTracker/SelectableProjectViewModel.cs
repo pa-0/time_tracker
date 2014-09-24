@@ -7,11 +7,18 @@ using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker
 {
+    /// <summary>
+    /// A view of projects for the context menu. Contains a way to ask if the project is selected, but
+    /// the implementation is fundamentally broken.
+    /// </summary>
     public class SelectableProjectViewModel : ViewModelBase
     {
         private SelectedProjectManager _selectionManager;
 
         private IProject _project;
+
+        public IProject Project { get { return _project;  } }
+
         public string Name
         {
             get
@@ -28,10 +35,18 @@ namespace Ficksworkshop.TimeTracker
             }
             set
             {
-                if (_selectionManager.SelectedProject != _project && _selectionManager.SetSelectedProject(_project))
+                if (value)
+                {
+                    if (_selectionManager.SelectedProject != _project && _selectionManager.SetSelectedProject(_project))
+                    {
+                        NotifyPropertyChanged("IsSelected");
+                    }
+                }
+                else
                 {
                     NotifyPropertyChanged("IsSelected");
                 }
+                
             }
         }
 

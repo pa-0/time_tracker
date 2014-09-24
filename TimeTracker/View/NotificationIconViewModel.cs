@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
 
@@ -67,7 +68,6 @@ namespace Ficksworkshop.TimeTracker
             }
             set
             {
-                
                 if (value != _selectedProject)
                 {
                     // First try to change in the selected project manager, since the change might be rejected
@@ -154,8 +154,18 @@ namespace Ficksworkshop.TimeTracker
         /// <param name="eventArgs"></param>
         private void SelectedProjectChangedEventHandler(object sender, SelectedProjectChangedEventArgs eventArgs)
         {
+            IProject oldSelection = SelectedProject;
+
             // This needs to cause the projecs view model to send the notification
             SelectedProject = eventArgs.NewProject;
+
+            // The selectable projects also store a state (for the view) about whether they are selected
+            // TODO Maybe the selection should be a selectable project so we don't have to find it
+            var oldSelectedViewModel = ActiveProjects.FirstOrDefault(p => p.Project == oldSelection);
+            if (oldSelectedViewModel != null)
+            {
+                oldSelectedViewModel.IsSelected = false;
+            }
         }
 
         #endregion

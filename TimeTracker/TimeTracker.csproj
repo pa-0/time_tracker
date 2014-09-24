@@ -77,7 +77,7 @@
     </ApplicationDefinition>
     <Compile Include="Commands\SelectedPunchInOutCommand.cs" />
     <Compile Include="Model\AutoPunchOutSelectedProjectEventHandler.cs" />
-    <Compile Include="SelectableProjectViewModel.cs" />
+    <Compile Include="View\SelectableProjectViewModel.cs" />
     <Compile Include="Model\SelectedProjectManager.cs" />
     <Compile Include="View\ViewModelBase.cs" />
     <Page Include="View\MainWindow.xaml">

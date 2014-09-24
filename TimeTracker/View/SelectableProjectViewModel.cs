@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTracker
+namespace Ficksworkshop.TimeTracker.View
 {
     /// <summary>
     /// A view of projects for the context menu. Contains a way to ask if the project is selected, but
@@ -19,6 +15,9 @@ namespace Ficksworkshop.TimeTracker
 
         public IProject Project { get { return _project;  } }
 
+        /// <summary>
+        /// Gets a display name for the project.
+        /// </summary>
         public string Name
         {
             get
@@ -26,7 +25,11 @@ namespace Ficksworkshop.TimeTracker
                 return _project.Name;
             }
         }
-
+        
+        /// <summary>
+        /// Sets if this project is currently selected. There is no way to "unset" as selected, so
+        /// unsetting just sends a notification.
+        /// </summary>
         public bool IsSelected
         {
             get
@@ -35,6 +38,7 @@ namespace Ficksworkshop.TimeTracker
             }
             set
             {
+                // TODO I still don't like this implementation
                 if (value)
                 {
                     if (_selectionManager.SelectedProject != _project && _selectionManager.SetSelectedProject(_project))
@@ -50,6 +54,11 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SelectableProjectViewModel"/> class.
+        /// </summary>
+        /// <param name="project">The project this is representing.</param>
+        /// <param name="selectionManager">The project selection manager.</param>
         public SelectableProjectViewModel(IProject project, SelectedProjectManager selectionManager)
         {
             _project = project;

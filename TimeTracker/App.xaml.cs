@@ -3,6 +3,7 @@ using System.Windows;
 using Ficksworkshop.TimeTracker.Commands;
 using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
+using Ficksworkshop.TimeTracker.View;
 using Hardcodet.Wpf.TaskbarNotification;
 
 namespace Ficksworkshop.TimeTracker

@@ -4,7 +4,7 @@ using System.Linq;
 using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTracker
+namespace Ficksworkshop.TimeTracker.View
 {
     public class NotificationIconViewModel : ViewModelBase
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTracker
+namespace Ficksworkshop.TimeTracker.Model
 {
     /// <summary>
     /// Event arguments for when the selected project has been changed.

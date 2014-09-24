@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Windows;
+using Ficksworkshop.TimeTracker.Commands;
 using Ficksworkshop.TimeTracker.Manager;
 using Ficksworkshop.TimeTracker.Model;
 using Hardcodet.Wpf.TaskbarNotification;
@@ -22,6 +23,10 @@ namespace Ficksworkshop.TimeTracker
            RestoreLastState();
 
            _selectedProjectManager = new SelectedProjectManager();
+           var autoPunchOut = new AutoPunchOutSelectedProjectEventHandler(_selectedProjectManager);
+
+            // TODO hack this in there since I need to know the selection manager to be able to create the command
+           Ficksworkshop.TimeTracker.Commands.Commands.PunchInOutCommand = new SelectedPunchInOutCommand(_selectedProjectManager);
 
            _notificationIcon = (TaskbarIcon)FindResource("NotificationIcon");
            _notificationIcon.DataContext = new NotificationIconViewModel(_selectedProjectManager);

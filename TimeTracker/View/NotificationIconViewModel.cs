@@ -67,12 +67,22 @@ namespace Ficksworkshop.TimeTracker
             }
             set
             {
-                // First try to change in the selected project manager, since the change might be rejected
-                if (value != _selectedProject && _selectedProjectManager.SetSelectedProject(value))
+                
+                if (value != _selectedProject)
                 {
-                    // Ok, it was changed, so actually update the property
-                    _selectedProject = value;
-                    NotifyPropertyChanged("SelectedProject");
+                    // First try to change in the selected project manager, since the change might be rejected
+                    // This returns a bool we would want to use to check if project was changed, but
+                    // this return false if the project is already that project, which happens if someone else
+                    // change the project and this is coming from a notification, so we ignore it, and just check
+                    // the property
+                    _selectedProjectManager.SetSelectedProject(value);
+
+                    if (_selectedProjectManager.SelectedProject == value)
+                    {
+                        // Ok, it was changed, so actually update the property
+                        _selectedProject = value;
+                        NotifyPropertyChanged("SelectedProject");
+                    }
                 }
             }
         }

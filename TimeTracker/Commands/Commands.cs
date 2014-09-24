@@ -109,7 +109,7 @@ namespace Ficksworkshop.TimeTracker.Commands
 
         public static readonly ICommand DeleteProjectCommand = new DeleteProjectCommand();
 
-        public static readonly ICommand PunchInOutCommand = new PunchInOutCommand();
+        public static ICommand PunchInOutCommand;
     }
 
     /// <summary>

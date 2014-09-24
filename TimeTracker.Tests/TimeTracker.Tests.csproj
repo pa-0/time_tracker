@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Commands\SelectedPunchInOutCommand.UnitTest.cs" />
     <Compile Include="ProjectTimesViewModel.UnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SelectedProjectManager.UnitTest.cs" />

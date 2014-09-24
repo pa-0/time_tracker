@@ -15,7 +15,7 @@
             </MenuItem.ItemContainerStyle>
         </MenuItem>
         <MenuItem Header="Edit Projects" Command="{x:Static commands:Commands.ShowWindowCommand}"/>
-        <MenuItem Command="{Binding TogglePunchStateCommand}" CommandParameter="{Binding SelectedProject}">
+        <MenuItem Command="{x:Static commands:Commands.PunchInOutCommand}" CommandParameter="{Binding SelectedProject}">
                <MenuItem.Style>
                    <Style TargetType="MenuItem">
                        <Style.Triggers>

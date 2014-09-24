@@ -5,8 +5,14 @@ using Ficksworkshop.TimeTracker.Model;
 
 namespace Ficksworkshop.TimeTracker
 {
-    public class NotificationIconViewModel : INotifyPropertyChanged
+    public class NotificationIconViewModel : ViewModelBase
     {
+        #region Fields
+
+        private SelectedProjectManager _selectedProjectManager;
+
+        #endregion
+
         #region Properties
 
         private bool _isPunchedIn;
@@ -27,12 +33,12 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        private ObservableCollection<IProject> _activeProjects = new ObservableCollection<IProject>();
+        private ObservableCollection<SelectableProjectViewModel> _activeProjects = new ObservableCollection<SelectableProjectViewModel>();
 
         /// <summary>
         /// The list of projects that we can punch in or punch out of.
         /// </summary>
-        public ObservableCollection<IProject> ActiveProjects
+        public ObservableCollection<SelectableProjectViewModel> ActiveProjects
         {
             get
             {
@@ -48,13 +54,34 @@ namespace Ficksworkshop.TimeTracker
             }
         }
 
-        public IProject SelectedProject { get; set; }
+        private IProject _selectedProject;
+
+        /// <summary>
+        /// Gets or sets the selected project to quiickly punch in or out of a project.
+        /// </summary>
+        public IProject SelectedProject
+        {
+            get
+            {
+                return _selectedProject;
+            }
+            set
+            {
+                // First try to change in the selected project manager, since the change might be rejected
+                if (value != _selectedProject && _selectedProjectManager.SetSelectedProject(value))
+                {
+                    // Ok, it was changed, so actually update the property
+                    _selectedProject = value;
+                    NotifyPropertyChanged("SelectedProject");
+                }
+            }
+        }
 
         #endregion
 
         #region Constructors
 
-        public NotificationIconViewModel()
+        public NotificationIconViewModel(SelectedProjectManager selectedProjectManager)
         {
             // When we are constructed, we need to listen to events coming from the data
             // set so that we can update our local view.
@@ -64,20 +91,9 @@ namespace Ficksworkshop.TimeTracker
                 TrackerInstance.DataSet.ProjectsChanged += ProjectsChangedEventHandler;
                 TrackerInstance.DataSet.ProjectTimeChanged += ProjectTimeChangedEventHandler;
             }
-        }
 
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected void NotifyPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            _selectedProjectManager = selectedProjectManager;
+            _selectedProjectManager.SelectedProjectChanged += SelectedProjectChangedEventHandler;
         }
 
         #endregion
@@ -92,7 +108,7 @@ namespace Ficksworkshop.TimeTracker
             {
                 if (project.Status != ProjectStatus.Closed)
                 {
-                    ActiveProjects.Add(project);
+                    ActiveProjects.Add(new SelectableProjectViewModel(project, _selectedProjectManager));
                 }
             }
         }
@@ -119,6 +135,17 @@ namespace Ficksworkshop.TimeTracker
             }
 
             ProjectsChangedEventHandler(null, null);
+        }
+
+        /// <summary>
+        /// Handler when the selected project changes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="eventArgs"></param>
+        private void SelectedProjectChangedEventHandler(object sender, SelectedProjectChangedEventArgs eventArgs)
+        {
+            // This needs to cause the projecs view model to send the notification
+            SelectedProject = eventArgs.NewProject;
         }
 
         #endregion

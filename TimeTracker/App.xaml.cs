@@ -13,13 +13,18 @@ namespace Ficksworkshop.TimeTracker
     {
         private TaskbarIcon _notificationIcon;
 
+        private SelectedProjectManager _selectedProjectManager;
+
         protected override void OnStartup(StartupEventArgs e)
         {
            base.OnStartup(e);
 
            RestoreLastState();
 
+           _selectedProjectManager = new SelectedProjectManager();
+
            _notificationIcon = (TaskbarIcon)FindResource("NotificationIcon");
+           _notificationIcon.DataContext = new NotificationIconViewModel(_selectedProjectManager);
         }
 
         protected override void OnExit(ExitEventArgs e)
@@ -35,7 +40,16 @@ namespace Ficksworkshop.TimeTracker
 
             // Default load the database
             StringSetting setting = (StringSetting)TrackerInstance.Settings.Items.Where(i => i.Name == TrackerSettings.LastDataSet).First();
-            setting.Value = @"D:\timetracker.ttd";
+
+            // TODO this should be loading the settings selectively, not the database
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                setting.Value = @"D:\timetracker_debug.ttd";
+            }
+            else
+            {
+                setting.Value = @"D:\timetracker.ttd";
+            }
 
             TrackerInstance.OpenDataSet(setting.Value);
         }

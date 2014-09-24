@@ -9,10 +9,12 @@
                 <Style>
                     <Setter Property="MenuItem.Header" Value="{Binding Name}"/>
                     <Setter Property="MenuItem.Command" Value="{Binding ActivateProjectCommand}"/>
+                    <Setter Property="MenuItem.IsCheckable" Value="True"/>
+                    <Setter Property="MenuItem.IsChecked" Value="{Binding Path=IsSelected, Mode=TwoWay}"/>
                 </Style>
             </MenuItem.ItemContainerStyle>
         </MenuItem>
-        <MenuItem Header="Open Window" Command="{x:Static commands:Commands.ShowWindowCommand}"/>
+        <MenuItem Header="Edit Projects" Command="{x:Static commands:Commands.ShowWindowCommand}"/>
         <MenuItem Command="{Binding TogglePunchStateCommand}" CommandParameter="{Binding SelectedProject}">
                <MenuItem.Style>
                    <Style TargetType="MenuItem">
@@ -27,10 +29,9 @@
                    </Style>
                </MenuItem.Style>
         </MenuItem>
-        <Separator/>
         <MenuItem Header="Recent Times" Command="{x:Static commands:Commands.ViewDayDetailsCommand}"/>
         <Separator/>
-        <MenuItem Header="Load DataSet" Command="{x:Static commands:Commands.LoadDataSetCommand}" />
+        <MenuItem Header="Load Database" Command="{x:Static commands:Commands.LoadDataSetCommand}" />
         <MenuItem Header="Exit" Command="{x:Static commands:Commands.ExitApplicationCommand}" />
     </ContextMenu>
     
@@ -39,8 +40,5 @@
                     ToolTipText="Double-click to punch-in/punch-out"
                     DoubleClickCommand="{x:Static commands:Commands.PunchInOutCommand}"
                     ContextMenu="{StaticResource SysTrayMenu}">
-        <tb:TaskbarIcon.DataContext>
-            <local:NotificationIconViewModel/>
-        </tb:TaskbarIcon.DataContext>
     </tb:TaskbarIcon>
 </ResourceDictionary>

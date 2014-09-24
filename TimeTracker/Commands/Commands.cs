@@ -26,7 +26,7 @@ namespace Ficksworkshop.TimeTracker.Commands
                 {
                     // If don't close, then things won't be saved
                     TrackerInstance.CloseDataSet();
-                    
+
                     Application.Current.Shutdown();
                 }
             };

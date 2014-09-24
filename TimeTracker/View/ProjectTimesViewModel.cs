@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Linq;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTracker
+namespace Ficksworkshop.TimeTracker.View
 {
     /// <summary>
     /// View model that can show a filtered list of project times.

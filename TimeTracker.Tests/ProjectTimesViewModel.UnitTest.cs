@@ -5,6 +5,7 @@ using Ficksworkshop.TimeTracker;
 using Ficksworkshop.TimeTrackerAPI;
 using Ficksworkshop.TimeTracker.Model;
 using Ficksworkshop.TimeTracker.TestUtilities.Mock;
+using Ficksworkshop.TimeTracker.View;
 
 namespace TimeTracker.Tests
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using Ficksworkshop.TimeTracker.Model;
 
-namespace Ficksworkshop.TimeTracker
+namespace Ficksworkshop.TimeTracker.View
 {
     internal class MainWindowViewModel : ViewModelBase
     {

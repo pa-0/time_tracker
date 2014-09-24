@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Ficksworkshop.TimeTracker
+namespace Ficksworkshop.TimeTracker.View
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

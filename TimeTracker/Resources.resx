@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SaveTrackerData" xml:space="preserve">
-    <value>Do you want to close the current project database and open a new database?</value>
+  <data name="NotificationIconStatus_NoneSelected" xml:space="preserve">
+    <value>No project selected</value>
+  </data>
+  <data name="NotificationIconStatus_PunchedIn" xml:space="preserve">
+    <value>Punched in to {0}</value>
+  </data>
+  <data name="NotificationIconStatus_PunchedOut" xml:space="preserve">
+    <value>{0} selected (not punched in)</value>
   </data>
 </root>

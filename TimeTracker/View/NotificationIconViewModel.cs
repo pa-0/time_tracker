@@ -30,6 +30,7 @@ namespace Ficksworkshop.TimeTracker.View
                 {
                     _isPunchedIn = value;
                     NotifyPropertyChanged("IsPunchedIn");
+                    UpdatePunchInOutStatus();
                 }
             }
         }
@@ -82,7 +83,26 @@ namespace Ficksworkshop.TimeTracker.View
                         // Ok, it was changed, so actually update the property
                         _selectedProject = value;
                         NotifyPropertyChanged("SelectedProject");
+                        UpdatePunchInOutStatus();
                     }
+                }
+            }
+        }
+
+        private string _punchInOutStatus;
+
+        /// <summary>
+        /// Gets a status string to display in the UI describing a the project currently punched into
+        /// </summary>
+        public string PunchInOutStatus
+        {
+            get { return _punchInOutStatus; }
+            private set
+            {
+                if (value != _punchInOutStatus)
+                {
+                    _punchInOutStatus = value;
+                    NotifyPropertyChanged("PunchInOutStatus");
                 }
             }
         }
@@ -93,6 +113,8 @@ namespace Ficksworkshop.TimeTracker.View
 
         public NotificationIconViewModel(SelectedProjectManager selectedProjectManager)
         {
+            UpdatePunchInOutStatus();
+
             // When we are constructed, we need to listen to events coming from the data
             // set so that we can update our local view.
             TrackerInstance.DataSetChangedEvent += DataContextChangedEventHandler;
@@ -109,6 +131,22 @@ namespace Ficksworkshop.TimeTracker.View
         #endregion
 
         #region Private Members
+
+        private void UpdatePunchInOutStatus()
+        {
+            if (SelectedProject == null)
+            {
+                PunchInOutStatus = Resources.NotificationIconStatus_NoneSelected;
+            }
+            else if (!IsPunchedIn)
+            {
+                PunchInOutStatus = string.Format(Resources.NotificationIconStatus_PunchedOut, SelectedProject.Name);
+            }
+            else
+            {
+                PunchInOutStatus = string.Format(Resources.NotificationIconStatus_PunchedIn, SelectedProject.Name);
+            }
+        }
 
         private void ProjectsChangedEventHandler(object sender, object e)
         {

@@ -77,6 +77,11 @@
     </ApplicationDefinition>
     <Compile Include="Commands\SelectedPunchInOutCommand.cs" />
     <Compile Include="Model\AutoPunchOutSelectedProjectEventHandler.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="View\SelectableProjectViewModel.cs" />
     <Compile Include="Model\SelectedProjectManager.cs" />
     <Compile Include="View\ViewModelBase.cs" />
@@ -123,6 +128,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>

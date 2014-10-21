@@ -40,6 +40,11 @@ namespace Ficksworkshop.TimeTracker
             base.OnExit(e);
         }
 
+        public TaskbarIcon Icon
+        {
+            get { return _notificationIcon; }
+        }
+
         private void RestoreLastState()
         {
             // Here should load settings from some default location. But not implemented storing of settings, so just set the values explicitly

@@ -84,8 +84,23 @@ namespace Ficksworkshop.TimeTracker.Commands
                 // Ask for the file that we want to open
                 if (result == MessageBoxResult.Yes)
                 {
+                    // TODO The following window stuff is a hack. In order to show the
+                    // open file dialog, you need a main window. But by default, we don't
+                    // have a window. So, if we don't have one, we just show one, then close
+                    // it automatically at the end.
+                    bool needHideWindow = false;
+                    if (Application.Current.MainWindow == null)
+                    {
+                        Application.Current.MainWindow = new MainWindow();
+                        var viewModel = new MainWindowViewModel(TrackerInstance.Settings, TrackerInstance.DataSet);
+                        Application.Current.MainWindow.DataContext = viewModel;
+                        Application.Current.MainWindow.Show();
+                        needHideWindow = true;
+                    }
+
                     var openFileDialog = new OpenFileDialog();
-                    if (openFileDialog.ShowDialog().Value)
+                    var response = openFileDialog.ShowDialog();
+                    if (response.HasValue && response.Value)
                     {
                         // If we are ok, then open the new tracker data set
                         try
@@ -99,6 +114,11 @@ namespace Ficksworkshop.TimeTracker.Commands
                         {
                             // TODO catching all is bad!
                         }
+                    }
+
+                    if (needHideWindow)
+                    {
+                        Application.Current.MainWindow.Close();
                     }
                 }
             }
